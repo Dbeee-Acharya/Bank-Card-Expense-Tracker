@@ -1,0 +1,27 @@
+#BlueJ class context
+comment0.target=CreditCard
+comment0.text=\r\n\ This\ is\ the\ credit\ card\ class\ which\ is\ the\ child\ class\ of\ BankCard\r\n\ The\ client\ can\ request\ credit,\ and\ is\ granted\ the\ amound\ if\ all\ the\r\n\ eligibility\ criteria\ is\ met.\ S/he\ can\ also\ cancel\ their\ credit\ card\r\n\ if\ required\ \r\n\ \r\n\ @author\ Dibbeshwor\ Acharya\r\n
+comment1.params=clientName\ issuerBank\ bankAccount\ cardID\ balance\ cvcNumber\ interestRate\ expirationDate
+comment1.target=CreditCard(java.lang.String,\ java.lang.String,\ java.lang.String,\ int,\ int,\ int,\ double,\ java.lang.String)
+comment10.params=
+comment10.target=void\ display()
+comment2.params=
+comment2.target=int\ get_cvcNumber()
+comment2.text=creating\ accessor\ methods\ for\ all\ the\ attributes\ \r\n\ accessor\ methods\ return\ the\ value\ of\ private\ attributes\r\n
+comment3.params=
+comment3.target=double\ get_creditLimit()
+comment4.params=
+comment4.target=double\ get_interestRate()
+comment5.params=
+comment5.target=java.lang.String\ get_expirationDate()
+comment6.params=
+comment6.target=int\ get_gracePeriod()
+comment7.params=
+comment7.target=boolean\ get_isGranted()
+comment8.params=creditLimit\ gracePeriod
+comment8.target=void\ setCreditLimit(double,\ int)
+comment8.text=\ method\ to\ set\ the\ credit\ limit\ \r\n\ It\ accepts\ two\ parameters\ and\ checks\ \r\n\ if\ the\ client\ is\ eligible\ for\ credit\ \r\n
+comment9.params=
+comment9.target=void\ cancelCreditCard()
+comment9.text=method\ to\ cancel\ credit\ card\ \r\n\ It\ resets\ the\ value\ of\ four\ attributes\r\n
+numComments=11

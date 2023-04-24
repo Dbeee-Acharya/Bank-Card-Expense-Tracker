@@ -1,0 +1,23 @@
+#BlueJ class context
+comment0.target=BankCard
+comment0.text=\r\n\ This\ is\ the\ main\ Parent\ class.\r\n\ \r\n\ @author\ Dibbeshwor\ Acharya\r\n
+comment1.params=issuerBank\ bankAccount\ cardID\ balance
+comment1.target=BankCard(java.lang.String,\ java.lang.String,\ int,\ int)
+comment2.params=
+comment2.target=java.lang.String\ get_clientName()
+comment2.text=creating\ accessor\ methods\ for\ each\ of\ our\ attributes\r\n\ this\ returns\ the\ value\ of\ private\ attributes\r\n
+comment3.params=
+comment3.target=java.lang.String\ get_issuerBank()
+comment4.params=
+comment4.target=java.lang.String\ get_bankAccount()
+comment5.params=
+comment5.target=int\ get_cardID()
+comment6.params=
+comment6.target=int\ get_balance()
+comment7.params=clientName
+comment7.target=void\ set_clientName(java.lang.String)
+comment8.params=balance
+comment8.target=void\ set_balance(int)
+comment9.params=
+comment9.target=void\ display()
+numComments=10

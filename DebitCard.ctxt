@@ -1,0 +1,22 @@
+#BlueJ class context
+comment0.target=DebitCard
+comment0.text=\r\n\ This\ is\ the\ debit\ card\ class\ and\ also\ the\ child\ class\ of\ bank\ card\r\n\ The\ client\ can\ withdraw\ money\ from\ there\ account.\ The\ money\ is\ withdrawn\ \r\n\ only\ if\ the\ required\ critera\ is\ fullfilled.\ The\ withdrawl\ amount\ is\ then\ \r\n\ deducted\ from\ the\ clients\ balance\r\n\ \r\n\ @author\ Dibbeshwor\ Acharya\r\n
+comment1.params=clientName\ issuerBank\ bankAccount\ cardID\ balance\ pinNumber
+comment1.target=DebitCard(java.lang.String,\ java.lang.String,\ java.lang.String,\ int,\ int,\ int)
+comment2.params=
+comment2.target=int\ get_pinNumber()
+comment2.text=creating\ the\ required\ accessor\ methods\ for\ all\ the\ attributes\r\n\ this\ returns\ the\ value\ of\ private\ attributes\ \r\n
+comment3.params=
+comment3.target=int\ get_withdrawalAmount()
+comment4.params=
+comment4.target=java.lang.String\ get_dateOfWithdrawal()
+comment5.params=
+comment5.target=boolean\ get_hasWithdrawn()
+comment6.params=withdrawalAmount
+comment6.target=void\ set_withdrawalAmount(int)
+comment7.params=pinNumber\ withdrawalAmount\ dateOfWithdrawal
+comment7.target=void\ withdraw(int,\ int,\ java.lang.String)
+comment7.text=creating\ the\ withdraw\ method\ that\ conducts\ the\ withdraw\ process\r\n\ This\ method\ accepts\ three\ parameters\ and\ checks\ two\ of\ them\ against\ the\ instance\ variable\r\n
+comment8.params=
+comment8.target=void\ display()
+numComments=9
