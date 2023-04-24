@@ -2,4 +2,7 @@
 comment0.target=BankGUI
 comment1.params=
 comment1.target=BankGUI()
-numComments=2
+comment1.text=\r\n\ ALl\ the\ Jframe\ components\ are\ made\ inside\ its\ constructor\r\n
+comment2.params=Args
+comment2.target=void\ main(java.lang.String[])
+numComments=3
