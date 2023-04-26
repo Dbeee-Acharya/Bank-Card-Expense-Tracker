@@ -8,9 +8,12 @@ import java.awt.color.*; //to set color
 import java.awt.Font; // to set font
 import java.util.ArrayList; //to use arrayList
 
-public class BankGUI {
+  public class BankGUI implements ActionListener{
     
     private JFrame mainJFrame; //creating a new JFrame instance
+    
+    /* Jpanels */
+    private JPanel mainScreen_panel;
 
     /* The buttons used for Welcome Screen are declared here
      */
@@ -36,7 +39,7 @@ public class BankGUI {
         mainJFrame = new JFrame("Bank GUI"); //Creating the main JFrame 
 
         /* creating Jpanels*/
-        JPanel mainScreen_panel = new JPanel();
+        mainScreen_panel = new JPanel();
 
         /* Icons */
         Icon addUser_icon = new ImageIcon("./icons/addUser.png"); //icon for add user
@@ -67,6 +70,14 @@ public class BankGUI {
         debitCardInfoMainScreen_button = new JButton("Debit Card Info", card_icon);
         creditCardInfoMainScreen_button = new JButton("Credit Card Info", card_icon);
         withdrawMainScreen_button = new JButton("Withdraw", withdraw_icon);
+
+        /* Event Listener for Buttons */
+        addDebitCardMainScreen_button.addActionListener(this);
+        addCreditCardMainScreen_button.addActionListener(this);
+        checkBalanceMainScreen_button.addActionListener(this);
+        debitCardInfoMainScreen_button.addActionListener(this);
+        creditCardInfoMainScreen_button.addActionListener(this);
+        withdrawMainScreen_button.addActionListener(this);
 
         /* JTextFeild Components */
         clientNameMainScreen_textField = new JTextField("Client Name");
@@ -110,6 +121,12 @@ public class BankGUI {
         mainJFrame.setLayout(null); //removing the default layout 
         mainJFrame.setSize(1200, 672); //setting the width and height of the JFrame
         mainJFrame.setVisible(true); //setting the visibility of mainFrame
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+      mainScreen_panel.setVisible(false);
     }
 
     public static void main (String[] Args) {
