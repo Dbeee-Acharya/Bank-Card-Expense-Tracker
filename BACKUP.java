@@ -14,13 +14,13 @@ public class BankGUI {
 
     /* The buttons used for Welcome Screen are declared here
      */
-    private JButton addClientNameMainScreen_button,
-                    addDebitCard_mainScreen, 
-                    addCreditCard_mainScreen,
-                    checkBalance_mainScreen,
-                    debitCardInfo_mainScreen,
-                    creditCardInfo_mainScreen,
-                    withdraw_mainScreen;
+    private JButton addClientName_welcomeScreen,
+                    addDebitCard_welcomeScreen, 
+                    addCreditCard_welcomeScreen,
+                    checkBalance_welcomeScreen,
+                    debitCardInfo_welcomeScreen,
+                    creditCardInfo_welcomeScreen,
+                    withdraw_welcomeScreen;
        
     /**
      * ALl the Jframe components are made inside its constructor
@@ -32,14 +32,13 @@ public class BankGUI {
         JPanel mainScreen_panel = new JPanel();
 
         /* Icons */
-        Icon addUser_icon = new ImageIcon("./icons/addUser.png");
-
+        Icon addUser_icon = new ImageIcon("./icons/addUser");
 
         /* Initializing different fonts */
         Font headerFont = new Font(Font.DIALOG, Font.PLAIN, 24);
         Font inputLabelFont = new Font(Font.DIALOG, Font.PLAIN, 18);
 
-        /* JLabel components mainScreen*/
+        /* JLabel components welcomeScreen*/
         JLabel mainScreenWelcome_label = new JLabel("Welcome User,");
         JLabel mainScreenInstruction_label = new JLabel("Please add client name before proceeding");
 
@@ -48,24 +47,19 @@ public class BankGUI {
         mainScreenInstruction_label.setFont(inputLabelFont);
 
         /*JButton Components*/
-        addClientNameMainScreen_button = new JButton("Add Client", addUser_icon);
+        addClientName_welcomeScreen = new JButton("Add Client", addUser_icon);
 
         /* JTextFeild Components */
-        JTextField clientNameMainScreen_textField = new JTextField("Client Name");
 
         /*setBounds for components*/
         mainScreenWelcome_label.setBounds(250, 169, 166, 35);
         mainScreenInstruction_label.setBounds(250, 208, 337, 25);
 
-        addClientNameMainScreen_button.setBounds(250, 300, 202, 40); 
-
-        clientNameMainScreen_textField.setBounds(250, 250, 242, 34);
+        addClientName_welcomeScreen.setBounds(250, 300, 202, 51);
 
         /* Add components to JPanel */
         mainScreen_panel.add(mainScreenWelcome_label);
         mainScreen_panel.add(mainScreenInstruction_label);
-        mainScreen_panel.add(addClientNameMainScreen_button);
-        mainScreen_panel.add(clientNameMainScreen_textField);
 
         /* set layout of jpanel */
         mainScreen_panel.setLayout(null);
