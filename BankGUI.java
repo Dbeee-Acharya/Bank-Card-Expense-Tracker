@@ -11,53 +11,60 @@ import java.util.ArrayList; //to use arrayList
 public class BankGUI {
     
     private JFrame mainJFrame; //creating a new JFrame instance
-   
+
+    /* The buttons used for Welcome Screen are declared here
+     */
+    private JButton addDebitCard_welcomeScreen, 
+                    addCreditCard_welcomeScreen,
+                    checkBalance_welcomeScreen,
+                    debitCardInfo_welcomeScreen,
+                    creditCardInfo_welcomeScreen,
+                    withdraw_welcomeScreen;
+       
     /**
      * ALl the Jframe components are made inside its constructor
      */
     private BankGUI() {
         mainJFrame = new JFrame("Bank GUI"); //Creating the main JFrame 
 
-        /* Initializing different fonts */
-        Font headerFont = new Font(Font.SANS_SERIF, Font.PLAIN, 24);
-        Font inputLabelFont = new Font(Font.SANS_SERIF, Font.PLAIN, 18);
+        /* creating Jpanels*/
+        JPanel mainScreen_panel = new JPanel();
 
-        /* JLabel components */
-        JLabel loginScreenWelcome_label = new JLabel("Welcome");
-        JLabel loginScreenUserName_label = new JLabel("Username");
-        JLabel loginScreenPassword_label = new JLabel("Password");
+        /* Initializing different fonts */
+        Font headerFont = new Font(Font.DIALOG, Font.PLAIN, 24);
+        Font inputLabelFont = new Font(Font.DIALOG, Font.PLAIN, 18);
+
+        /* JLabel components welcomeScreen*/
+        JLabel mainScreenWelcome_label = new JLabel("Welcome User,");
+        JLabel mainScreenInstruction_label = new JLabel("Please add client name before proceeding");
 
         /* setting fonts for JLabel */
-        loginScreenWelcome_label.setFont(headerFont);
-        loginScreenUserName_label.setFont(inputLabelFont);
-        loginScreenPassword_label.setFont(inputLabelFont);
+        mainScreenWelcome_label.setFont(headerFont);
+        mainScreenInstruction_label.setFont(inputLabelFont);
+
+        /*JButton Components welcome Screen*/
 
         /* JTextFeild Components */
 
-
-        /* JPanel Components */
-        JPanel loginScreen_panel = new JPanel();
-
         /*setBounds for components*/
-        loginScreenWelcome_label.setBounds(548, 548, 105, 40);
-        loginScreenUserName_label.setBounds(385, 350, 95, 25);
-        loginScreenPassword_label.setBounds(393, 423, 79, 25);
+        mainScreenWelcome_label.setBounds(250, 169, 166, 35);
+        mainScreenInstruction_label.setBounds(250, 208, 337, 25);
 
         /* Add components to JPanel */
-        loginScreen_panel.add(loginScreenWelcome_label);
-        loginScreen_panel.add(loginScreenUserName_label);
-        loginScreen_panel.add(loginScreenPassword_label);
+        mainScreen_panel.add(mainScreenWelcome_label);
+        mainScreen_panel.add(mainScreenInstruction_label);
 
-        /* set visibility of jpanel */
-        loginScreen_panel.setSize(1200, 672);
+        /* set layout of jpanel */
+        mainScreen_panel.setLayout(null);
+        mainScreen_panel.setSize(1200, 672);
 
         /* Add JPanel to JFrame */
-        mainJFrame.add(loginScreen_panel);
+        mainJFrame.add(mainScreen_panel);
 
         
         mainJFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);       
-        mainJFrame.setSize(1200, 672); //setting the width and height of the JFrame
         mainJFrame.setLayout(null); //removing the default layout 
+        mainJFrame.setSize(1200, 672); //setting the width and height of the JFrame
         mainJFrame.setVisible(true); //setting the visibility of mainFrame
     }
 
