@@ -13,7 +13,8 @@ import java.util.ArrayList; //to use arrayList
     private JFrame mainJFrame; //creating a new JFrame instance
     
     /* Jpanels */
-    private JPanel mainScreen_panel;
+    private JPanel mainScreen_panel,
+            addDebitCardScreen_panel;
 
     /* The buttons used for Welcome Screen are declared here
      */
@@ -40,6 +41,7 @@ import java.util.ArrayList; //to use arrayList
 
         /* creating Jpanels*/
         mainScreen_panel = new JPanel();
+        addDebitCardScreen_panel = new JPanel();
 
         /* Icons */
         Icon addUser_icon = new ImageIcon("./icons/addUser.png"); //icon for add user
@@ -97,6 +99,7 @@ import java.util.ArrayList; //to use arrayList
         creditCardInfoMainScreen_button.setBounds(794, 423, 202, 40);
         withdrawMainScreen_button.setBounds(794, 494, 202, 40);
 
+
         /* Add components to JPanel */
         mainScreen_panel.add(mainScreenWelcome_label);
         mainScreen_panel.add(mainScreenInstruction_label);
@@ -113,8 +116,13 @@ import java.util.ArrayList; //to use arrayList
         mainScreen_panel.setLayout(null);
         mainScreen_panel.setSize(1200, 672);
 
+        addDebitCardScreen_panel.setLayout(null);
+        addDebitCardScreen_panel.setSize(1200, 672);
+        addDebitCardScreen_panel.setVisible(false);
+
         /* Add JPanel to JFrame */
         mainJFrame.add(mainScreen_panel);
+        mainJFrame.add(addDebitCardScreen_panel);
 
         
         mainJFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);       
@@ -127,6 +135,7 @@ import java.util.ArrayList; //to use arrayList
     @Override
     public void actionPerformed(ActionEvent e) {
       mainScreen_panel.setVisible(false);
+      addDebitCardScreen_panel.setVisible(true);
     }
 
     public static void main (String[] Args) {
