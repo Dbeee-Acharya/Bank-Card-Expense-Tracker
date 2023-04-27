@@ -39,8 +39,15 @@ import java.util.ArrayList; //to use arrayList
 
     /* JLabel used */
     private JLabel mainScreenWelcome_label,
-            mainScreenWelcome_label_after,
-            mainScreenInstruction_label;
+            mainScreenInstruction_label,
+            
+            //debit card screen labels
+            welcomeUserAddDebit_label,
+            issuerBankAddDebit_label,
+            bankAccountAddDebit_label,
+            cardIdAddDebit_label,
+            balanceAddDebit_label,
+            pinNumberAddDebit_label;
 
     /* TextFields used */
     private JTextField clientNameMainScreen_textField;
@@ -52,6 +59,8 @@ import java.util.ArrayList; //to use arrayList
     private Icon card_icon = new ImageIcon("./icons/card.png"); //icon for credit and debit card
     private Icon withdraw_icon = new ImageIcon("./icons/withdraw.png"); //icon for withdraw
     private Icon sad_icon = new ImageIcon("./icons/sad.png"); // Icon for sad user
+    private Icon clear_icon = new ImageIcon("./icons/clear.png"); // icon for clear info button
+    private Icon exit_icon = new ImageIcon("./icons/exit.png"); // exit icon
        
     /**
      * ALl the Jframe components are made inside its constructor
@@ -75,10 +84,23 @@ import java.util.ArrayList; //to use arrayList
         /* JLabel components */
         mainScreenWelcome_label = new JLabel("Welcome User,");
         mainScreenInstruction_label = new JLabel("Please add client name before proceeding");
+        
+        welcomeUserAddDebit_label = new JLabel("Welcome User");
+        issuerBankAddDebit_label = new JLabel("Issuer Bank:");
+        bankAccountAddDebit_label = new JLabel("Bank Account:");
+        cardIdAddDebit_label = new JLabel("Card ID:");
+        balanceAddDebit_label = new JLabel("Balance:");
+        pinNumberAddDebit_label = new JLabel("PIN Number:");
 
         /* setting fonts for JLabel */
         mainScreenWelcome_label.setFont(headerFont);
         mainScreenInstruction_label.setFont(inputLabelFont);
+        welcomeUserAddDebit_label.setFont(inputLabelFont);
+        issuerBankAddDebit_label.setFont(inputLabelFont);
+        bankAccountAddDebit_label.setFont(inputLabelFont);
+        cardIdAddDebit_label.setFont(inputLabelFont);
+        balanceAddDebit_label.setFont(inputLabelFont);
+        pinNumberAddDebit_label.setFont(inputLabelFont);
 
         /*JButton Components*/
         addClientNameMainScreen_button = new JButton("Add Client", addUser_icon);
@@ -89,6 +111,10 @@ import java.util.ArrayList; //to use arrayList
         debitCardInfoMainScreen_button = new JButton("Debit Card Info", card_icon);
         creditCardInfoMainScreen_button = new JButton("Credit Card Info", card_icon);
         withdrawMainScreen_button = new JButton("Withdraw", withdraw_icon);
+
+        addDebitCard_button = new JButton("Add Card", addCard_icon);
+        clearDebitCard_button = new JButton("Clear", clear_icon);
+        exitDebitCard_button = new JButton("Exit", exit_icon);
 
         /* Event Listener for Buttons */
         addClientNameMainScreen_button.addActionListener(this); 
@@ -192,31 +218,55 @@ import java.util.ArrayList; //to use arrayList
       }
 
       if (e.getSource() == addDebitCardMainScreen_button ) {
+        if(clientName.isEmpty()) {
+          JOptionPane.showMessageDialog(mainJFrame, "Client Name Cannot be Empty", "Alert", JOptionPane.ERROR_MESSAGE, sad_icon);
+        }
+
         mainScreen_panel.setVisible(false);
         addDebitCard_panel.setVisible(true);
       }
 
       if (e.getSource() == addCreditCardMainScreen_button) {
+        if(clientName.isEmpty()) {
+          JOptionPane.showMessageDialog(mainJFrame, "Client Name Cannot be Empty", "Alert", JOptionPane.ERROR_MESSAGE, sad_icon);
+        }
+
         mainScreen_panel.setVisible(false);
         addCreditCard_panel.setVisible(true);
       }
 
       if (e.getSource() == checkBalanceMainScreen_button) {
+        if(clientName.isEmpty()) {
+          JOptionPane.showMessageDialog(mainJFrame, "Client Name Cannot be Empty", "Alert", JOptionPane.ERROR_MESSAGE, sad_icon);
+        }
+
         mainScreen_panel.setVisible(false);
         checkBalance_panel.setVisible(true);
       }
 
       if (e.getSource() == debitCardInfoMainScreen_button) {
+        if(clientName.isEmpty()) {
+          JOptionPane.showMessageDialog(mainJFrame, "Client Name Cannot be Empty", "Alert", JOptionPane.ERROR_MESSAGE, sad_icon);
+        }
+
         mainScreen_panel.setVisible(false);
         debitCardInfo_panel.setVisible(true);
       }
 
       if (e.getSource() == creditCardInfoMainScreen_button) {
+        if(clientName.isEmpty()) {
+          JOptionPane.showMessageDialog(mainJFrame, "Client Name Cannot be Empty", "Alert", JOptionPane.ERROR_MESSAGE, sad_icon);
+        }
+
         mainScreen_panel.setVisible(false);
         creditCardInfo_panel.setVisible(true);
       }
 
       if (e.getSource() == withdrawMainScreen_button) {
+        if(clientName.isEmpty()) {
+          JOptionPane.showMessageDialog(mainJFrame, "Client Name Cannot be Empty", "Alert", JOptionPane.ERROR_MESSAGE, sad_icon);
+        }
+
         mainScreen_panel.setVisible(false);
         withdraw_panel.setVisible(true);
       }
