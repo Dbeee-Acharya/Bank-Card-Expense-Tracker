@@ -16,7 +16,7 @@ import java.util.ArrayList; //to use arrayList
     private JPanel mainScreen_panel,
             addDebitCard_panel,
             addCreditCard_panel,
-            checkBalane_panel,
+            checkBalance_panel,
             debitCardInfo_panel,
             creditCardInfo_panel,
             withdraw_panel;
@@ -29,14 +29,29 @@ import java.util.ArrayList; //to use arrayList
             checkBalanceMainScreen_button,
             debitCardInfoMainScreen_button,
             creditCardInfoMainScreen_button,
-            withdrawMainScreen_button;
+            withdrawMainScreen_button,
+
+            //add debit card buttons
+            addDebitCard_button,
+            clearDebitCard_button,
+            exitDebitCard_button;
+      
 
     /* JLabel used */
     private JLabel mainScreenWelcome_label,
+            mainScreenWelcome_label_after,
             mainScreenInstruction_label;
 
     /* TextFields used */
     private JTextField clientNameMainScreen_textField;
+
+    /* Icons */
+    private Icon addUser_icon = new ImageIcon("./icons/addUser.png"); //icon for add user
+    private Icon addCard_icon = new ImageIcon("./icons/addCard.png"); //icon for adding debit and credit card
+    private Icon checkBalance_icon = new ImageIcon("./icons/checkBalance.png"); //icon for checking balance
+    private Icon card_icon = new ImageIcon("./icons/card.png"); //icon for credit and debit card
+    private Icon withdraw_icon = new ImageIcon("./icons/withdraw.png"); //icon for withdraw
+    private Icon sad_icon = new ImageIcon("./icons/sad.png"); // Icon for sad user
        
     /**
      * ALl the Jframe components are made inside its constructor
@@ -47,20 +62,17 @@ import java.util.ArrayList; //to use arrayList
         /* creating Jpanels*/
         mainScreen_panel = new JPanel();
         addDebitCard_panel = new JPanel();
-
-        /* Icons */
-        Icon addUser_icon = new ImageIcon("./icons/addUser.png"); //icon for add user
-        Icon addCard_icon = new ImageIcon("./icons/addCard.png"); //icon for adding debit and credit card
-        Icon checkBalance_icon = new ImageIcon("./icons/checkBalance.png"); //icon for checking balance
-        Icon card_icon = new ImageIcon("./icons/card.png"); //icon for credit and debit card
-        Icon withdraw_icon = new ImageIcon("./icons/withdraw.png"); //icon for withdraw
-
+        addCreditCard_panel = new JPanel();
+        checkBalance_panel = new JPanel();
+        debitCardInfo_panel = new JPanel();
+        creditCardInfo_panel = new JPanel();
+        withdraw_panel = new JPanel();
 
         /* Initializing different fonts */
         Font headerFont = new Font(Font.DIALOG, Font.PLAIN, 24);
         Font inputLabelFont = new Font(Font.DIALOG, Font.PLAIN, 18);
 
-        /* JLabel components mainScreen*/
+        /* JLabel components */
         mainScreenWelcome_label = new JLabel("Welcome User,");
         mainScreenInstruction_label = new JLabel("Please add client name before proceeding");
 
@@ -89,10 +101,10 @@ import java.util.ArrayList; //to use arrayList
         withdrawMainScreen_button.addActionListener(this);
 
         /* JTextFeild Components */
-        clientNameMainScreen_textField = new JTextField("Client Name");
+        clientNameMainScreen_textField = new JTextField();
 
         /*setBounds for components*/
-        mainScreenWelcome_label.setBounds(250, 169, 166, 35);
+        mainScreenWelcome_label.setBounds(250, 169, 490, 35);
         mainScreenInstruction_label.setBounds(250, 208, 337, 25);
 
         addClientNameMainScreen_button.setBounds(250, 300, 202, 40); 
@@ -122,14 +134,42 @@ import java.util.ArrayList; //to use arrayList
         /* set layout of jpanel */
         mainScreen_panel.setLayout(null);
         mainScreen_panel.setSize(1200, 672);
+        mainScreen_panel.setVisible(true);
 
+        // Debit Card Panel
         addDebitCard_panel.setLayout(null);
         addDebitCard_panel.setSize(1200, 672);
         addDebitCard_panel.setVisible(false);
 
+        // Credit Card Panel
+        addCreditCard_panel.setLayout(null);
+        addCreditCard_panel.setSize(1200, 672);
+        addCreditCard_panel.setVisible(false);
+
+        // Show Balance Panel
+        checkBalance_panel.setLayout(null);
+        checkBalance_panel.setSize(1200, 672);
+        checkBalance_panel.setVisible(false);
+
+        // Debit Card info panel
+        debitCardInfo_panel.setLayout(null);
+        debitCardInfo_panel.setSize(1200, 672);
+        debitCardInfo_panel.setVisible(false);
+
+        // Credit Card Info Panel
+        creditCardInfo_panel.setLayout(null);
+        creditCardInfo_panel.setSize(1200, 672);
+        creditCardInfo_panel.setVisible(false);
+
+        // Withdraw Panel
+        withdraw_panel.setLayout(null);
+        withdraw_panel.setSize(1200, 672);
+        withdraw_panel.setVisible(false);
+
         /* Add JPanel to JFrame */
         mainJFrame.add(mainScreen_panel);
         mainJFrame.add(addDebitCard_panel);
+        mainJFrame.add(addCreditCard_panel);
 
         
         mainJFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);       
@@ -141,6 +181,16 @@ import java.util.ArrayList; //to use arrayList
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        String clientName = clientNameMainScreen_textField.getText();
+
+      if (e.getSource() == addClientNameMainScreen_button) {
+        if(clientName.isEmpty()) {
+          JOptionPane.showMessageDialog(mainJFrame, "Client Name Cannot be Empty", "Alert", JOptionPane.ERROR_MESSAGE, sad_icon);
+        }
+
+        mainScreenWelcome_label.setText("Welcome " + clientName + ",");
+      }
+
       if (e.getSource() == addDebitCardMainScreen_button ) {
         mainScreen_panel.setVisible(false);
         addDebitCard_panel.setVisible(true);
@@ -153,7 +203,7 @@ import java.util.ArrayList; //to use arrayList
 
       if (e.getSource() == checkBalanceMainScreen_button) {
         mainScreen_panel.setVisible(false);
-        checkBalane_panel.setVisible(true);
+        checkBalance_panel.setVisible(true);
       }
 
       if (e.getSource() == debitCardInfoMainScreen_button) {
@@ -167,7 +217,7 @@ import java.util.ArrayList; //to use arrayList
       }
 
       if (e.getSource() == withdrawMainScreen_button) {
-        mainScreen_panel.setVisible(fasle);
+        mainScreen_panel.setVisible(false);
         withdraw_panel.setVisible(true);
       }
     }
