@@ -151,6 +151,11 @@ import java.util.ArrayList; //to use arrayList
         addCreditCard_panel.setVisible(true);
       }
 
+      if (e.getSource() == checkBalanceMainScreen_button) {
+        mainScreen_panel.setVisible(false);
+        checkBalane_panel.setVisible(true);
+      }
+
       if (e.getSource() == debitCardInfoMainScreen_button) {
         mainScreen_panel.setVisible(false);
         debitCardInfo_panel.setVisible(true);
