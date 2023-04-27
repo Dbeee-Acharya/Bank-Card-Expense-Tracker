@@ -50,7 +50,14 @@ import java.util.ArrayList; //to use arrayList
             pinNumberAddDebit_label;
 
     /* TextFields used */
-    private JTextField clientNameMainScreen_textField;
+    private JTextField clientNameMainScreen_textField,
+            
+            // debit card screen TextFields
+            issuerBankAddDebit_textField,
+            bankAccountAddDebit_textField,
+            cardIdAddDebit_textField,
+            balanceAddDebit_textField,
+            pinNumberAddDebit_textFiled;
 
     /* Icons */
     private Icon addUser_icon = new ImageIcon("./icons/addUser.png"); //icon for add user
@@ -125,24 +132,54 @@ import java.util.ArrayList; //to use arrayList
         debitCardInfoMainScreen_button.addActionListener(this);
         creditCardInfoMainScreen_button.addActionListener(this);
         withdrawMainScreen_button.addActionListener(this);
+        
+        addDebitCard_button.addActionListener(this);
+        clearDebitCard_button.addActionListener(this);
+        exitDebitCard_button.addActionListener(this);
 
         /* JTextFeild Components */
         clientNameMainScreen_textField = new JTextField();
+        
+        issuerBankAddDebit_textField = new JTextField();
+        bankAccountAddDebit_textField = new JTextField();
+        cardIdAddDebit_textField = new JTextField();
+        balanceAddDebit_textField = new JTextField();
+        pinNumberAddDebit_textFiled = new JTextField();
 
         /*setBounds for components*/
+
+        // JLabel
         mainScreenWelcome_label.setBounds(250, 169, 490, 35);
         mainScreenInstruction_label.setBounds(250, 208, 337, 25);
 
-        addClientNameMainScreen_button.setBounds(250, 300, 202, 40); 
+        welcomeUserAddDebit_label.setBounds(100, 100, 500, 35);
+        issuerBankAddDebit_label.setBounds(118, 175, 120, 25);
+        bankAccountAddDebit_label.setBounds(118, 255, 120, 25);
+        cardIdAddDebit_label.setBounds(118, 335, 120, 25);
+        balanceAddDebit_label.setBounds(118, 415, 120, 25);
+        pinNumberAddDebit_label.setBounds(118, 495, 120, 25);
 
+        // TextField
         clientNameMainScreen_textField.setBounds(250, 250, 242, 34);
 
+        issuerBankAddDebit_textField.setBounds(118, 200, 242, 35);
+        bankAccountAddDebit_textField.setBounds(118, 280, 242, 35);
+        cardIdAddDebit_textField.setBounds(118, 360, 242, 35);
+        balanceAddDebit_textField.setBounds(118, 440, 242, 35);
+        pinNumberAddDebit_textFiled.setBounds(118, 520, 242, 35);
+        
+        // Button
+        addClientNameMainScreen_button.setBounds(250, 300, 202, 40);
         addDebitCardMainScreen_button.setBounds(794, 139, 202, 40);
         addCreditCardMainScreen_button.setBounds(794, 210, 202, 40);
         checkBalanceMainScreen_button.setBounds(794, 281, 202, 40);
         debitCardInfoMainScreen_button.setBounds(794, 352, 202, 40);
         creditCardInfoMainScreen_button.setBounds(794, 423, 202, 40);
         withdrawMainScreen_button.setBounds(794, 494, 202, 40);
+
+        addDebitCard_button.setBounds(794, 255, 202, 40);
+        clearDebitCard_button.setBounds(794, 316, 202, 40);
+        exitDebitCard_button.setBounds(794, 377, 202, 40);
 
 
         /* Add components to JPanel */
@@ -156,6 +193,21 @@ import java.util.ArrayList; //to use arrayList
         mainScreen_panel.add(debitCardInfoMainScreen_button);
         mainScreen_panel.add(creditCardInfoMainScreen_button);
         mainScreen_panel.add(withdrawMainScreen_button);
+
+        addDebitCard_panel.add(welcomeUserAddDebit_label);
+        addDebitCard_panel.add(issuerBankAddDebit_label);
+        addDebitCard_panel.add(bankAccountAddDebit_label);
+        addDebitCard_panel.add(cardIdAddDebit_label);
+        addDebitCard_panel.add(balanceAddDebit_label);
+        addDebitCard_panel.add(pinNumberAddDebit_label);
+        addDebitCard_panel.add(issuerBankAddDebit_textField);
+        addDebitCard_panel.add(bankAccountAddDebit_textField);
+        addDebitCard_panel.add(cardIdAddDebit_textField);
+        addDebitCard_panel.add(balanceAddDebit_textField);
+        addDebitCard_panel.add(pinNumberAddDebit_textFiled);
+        addDebitCard_panel.add(addDebitCard_button);
+        addDebitCard_panel.add(clearDebitCard_button);
+        addDebitCard_panel.add(exitDebitCard_button);
 
         /* set layout of jpanel */
         mainScreen_panel.setLayout(null);
