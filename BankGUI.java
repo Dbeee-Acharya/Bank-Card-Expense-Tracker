@@ -78,7 +78,26 @@ import java.util.ArrayList; //to use arrayList
             bankAccountAddDebit_textField,
             cardIdAddDebit_textField,
             balanceAddDebit_textField,
-            pinNumberAddDebit_textFiled;
+            pinNumberAddDebit_textFiled,
+            
+            issuerBankAddCredit_textField,
+            bankAccountAddCredit_textField,
+            cardIdAddCredit_textField,
+            balanceAddCredit_textField,
+            cvcNumberAddCredit_textFiled,
+            interestAddCredit_textField;
+
+    /* ComboBox used */
+    private JComboBox dateDayAddDebit_combo,
+            dateMonthAddDebit_combo,
+            dateYearAddDebit_combo;
+
+    private String[] dateDay = {
+      "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", 
+      "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", 
+      "26", "27", "28", "29", "30", "31"};
+    private String[] dateMonth = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+    private String[] dateYear = {"2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030"};
 
     /* Icons */
     private Icon addUser_icon = new ImageIcon("./icons/addUser.png"); //icon for add user
@@ -94,7 +113,7 @@ import java.util.ArrayList; //to use arrayList
     /**
      * ALl the Jframe components are made inside its constructor
      */
-    private BankGUI() {
+    public BankGUI() {
         mainJFrame = new JFrame("Bank GUI"); //Creating the main JFrame 
 
         /* creating Jpanels*/
@@ -199,6 +218,18 @@ import java.util.ArrayList; //to use arrayList
         balanceAddDebit_textField = new JTextField();
         pinNumberAddDebit_textFiled = new JTextField();
 
+        issuerBankAddCredit_textField = new JTextField();
+        bankAccountAddCredit_textField = new JTextField();
+        cardIdAddCredit_textField = new JTextField();
+        balanceAddCredit_textField = new JTextField();
+        cvcNumberAddCredit_textFiled = new JTextField();
+        interestAddCredit_textField = new JTextField();
+
+        /* JcomboBox components */
+        dateDayAddDebit_combo = new JComboBox(dateDay);
+        dateMonthAddDebit_combo = new JComboBox(dateMonth);
+        dateYearAddDebit_combo = new JComboBox(dateYear);
+
         /*setBounds for components*/
 
         // JLabel
@@ -231,6 +262,13 @@ import java.util.ArrayList; //to use arrayList
         cardIdAddDebit_textField.setBounds(118, 360, 242, 35);
         balanceAddDebit_textField.setBounds(118, 440, 242, 35);
         pinNumberAddDebit_textFiled.setBounds(118, 520, 242, 35);
+
+        issuerBankAddCredit_textField.setBounds(118, 200, 242, 35);
+        bankAccountAddCredit_textField.setBounds(118, 280, 242, 35);
+        cardIdAddCredit_textField.setBounds(118, 360, 242, 35);
+        balanceAddCredit_textField.setBounds(118, 440, 242, 35);
+        cvcNumberAddCredit_textFiled.setBounds(118, 520, 242, 35);
+        interestAddCredit_textField.setBounds(450, 200, 145, 35);
         
         // Button
         addClientNameMainScreen_button.setBounds(250, 300, 202, 40);
@@ -250,9 +288,13 @@ import java.util.ArrayList; //to use arrayList
         clearAddCredit_button.setBounds(794, 316, 202, 40);
         exitAddCredit_button.setBounds(794, 377, 202, 40);
 
+        // Combobox
+        dateDayAddDebit_combo.setBounds(490, 280, 105, 34);
+        dateMonthAddDebit_combo.setBounds(490, 326, 105, 34);
+        dateYearAddDebit_combo.setBounds(490, 372, 105, 34);
+
         // Setting visibility of buttons/components false by default
         changeClientNameMainScreen_button.setVisible(false);
-
 
         /* Add components to JPanel */
         mainScreen_panel.add(mainScreenWelcome_label);
@@ -295,6 +337,15 @@ import java.util.ArrayList; //to use arrayList
         addCreditCard_panel.add(dayAddCredit_label);
         addCreditCard_panel.add(monthAddCredit_label);
         addCreditCard_panel.add(yearAddCredit_label);
+        addCreditCard_panel.add(issuerBankAddCredit_textField);
+        addCreditCard_panel.add(bankAccountAddCredit_textField);
+        addCreditCard_panel.add(cardIdAddCredit_textField);
+        addCreditCard_panel.add(balanceAddCredit_textField);
+        addCreditCard_panel.add(cvcNumberAddCredit_textFiled);
+        addCreditCard_panel.add(interestAddCredit_textField);
+        addCreditCard_panel.add(dateDayAddDebit_combo);
+        addCreditCard_panel.add(dateMonthAddDebit_combo);
+        addCreditCard_panel.add(dateYearAddDebit_combo);
 
         /* set layout of jpanel */
         mainScreen_panel.setLayout(null);
