@@ -1,8 +1,11 @@
+
+
 /**
  * The BankGUI class 
  */
 
 import javax.swing.*; //Importing the java swing components
+
 import java.awt.event.*; //For event handling
 import java.awt.color.*; //to set color
 import java.awt.Font; // to set font
@@ -24,6 +27,7 @@ import java.util.ArrayList; //to use arrayList
     /* The buttons used for Welcome Screen are declared here
      */
     private JButton addClientNameMainScreen_button,
+            changeClientNameMainScreen_button,
             addDebitCardMainScreen_button, 
             addCreditCardMainScreen_button,
             checkBalanceMainScreen_button,
@@ -33,10 +37,14 @@ import java.util.ArrayList; //to use arrayList
 
             //add debit card buttons
             addDebitCard_button,
-            clearDebitCard_button,
-            exitDebitCard_button;
-      
+            clearAddDebit_button,
+            exitAddDebit_button,
 
+            //add credit card button
+            addCreditCard_button,
+            clearAddCredit_button,
+            exitAddCredit_button;
+            
     /* JLabel used */
     private JLabel mainScreenWelcome_label,
             mainScreenInstruction_label,
@@ -47,7 +55,20 @@ import java.util.ArrayList; //to use arrayList
             bankAccountAddDebit_label,
             cardIdAddDebit_label,
             balanceAddDebit_label,
-            pinNumberAddDebit_label;
+            pinNumberAddDebit_label,
+
+            // Credit Card screen labels
+            welcomeUserAddCredit_label,
+            issuerBankAddCredit_label,
+            bankAccountAddCredit_label,
+            cardIdAddCredit_label,
+            balanceAddCredit_label,
+            cvcNumberAddCredit_label,
+            interestAddCredit_label,
+            dayAddCredit_label,
+            monthAddCredit_label,
+            yearAddCredit_label;
+            
 
     /* TextFields used */
     private JTextField clientNameMainScreen_textField,
@@ -68,6 +89,7 @@ import java.util.ArrayList; //to use arrayList
     private Icon sad_icon = new ImageIcon("./icons/sad.png"); // Icon for sad user
     private Icon clear_icon = new ImageIcon("./icons/clear.png"); // icon for clear info button
     private Icon exit_icon = new ImageIcon("./icons/exit.png"); // exit icon
+    private Icon changeClient_icon = new ImageIcon("./icons/changeUser.png"); // change user icon
        
     /**
      * ALl the Jframe components are made inside its constructor
@@ -99,6 +121,17 @@ import java.util.ArrayList; //to use arrayList
         balanceAddDebit_label = new JLabel("Balance:");
         pinNumberAddDebit_label = new JLabel("PIN Number:");
 
+        welcomeUserAddCredit_label = new JLabel("Welcome User");
+        issuerBankAddCredit_label = new JLabel("Issuer Bank:");
+        bankAccountAddCredit_label = new JLabel("Bank Account:");
+        cardIdAddCredit_label = new JLabel("Card ID:");
+        balanceAddCredit_label = new JLabel("Balance:");
+        cvcNumberAddCredit_label = new JLabel("CVC Number:");
+        interestAddCredit_label = new JLabel("Interest Rate:");
+        dayAddCredit_label = new JLabel("Day:");
+        monthAddCredit_label = new JLabel("Month:");
+        yearAddCredit_label = new JLabel("Year:");
+
         /* setting fonts for JLabel */
         mainScreenWelcome_label.setFont(headerFont);
         mainScreenInstruction_label.setFont(inputLabelFont);
@@ -108,9 +141,21 @@ import java.util.ArrayList; //to use arrayList
         cardIdAddDebit_label.setFont(inputLabelFont);
         balanceAddDebit_label.setFont(inputLabelFont);
         pinNumberAddDebit_label.setFont(inputLabelFont);
+        welcomeUserAddCredit_label.setFont(headerFont);
+        issuerBankAddCredit_label.setFont(inputLabelFont);
+        bankAccountAddCredit_label.setFont(inputLabelFont);
+        cardIdAddCredit_label.setFont(inputLabelFont);
+        balanceAddCredit_label.setFont(inputLabelFont);
+        cvcNumberAddCredit_label.setFont(inputLabelFont);
+        interestAddCredit_label.setFont(inputLabelFont);
+        dayAddCredit_label.setFont(inputLabelFont);
+        monthAddCredit_label.setFont(inputLabelFont);
+        yearAddCredit_label.setFont(inputLabelFont);
 
         /*JButton Components*/
         addClientNameMainScreen_button = new JButton("Add Client", addUser_icon);
+        changeClientNameMainScreen_button = new JButton("Change Client", changeClient_icon);
+        exitAddDebit_button = new JButton("Exit", exit_icon);
 
         addDebitCardMainScreen_button = new JButton("Add Debit Card", addCard_icon);
         addCreditCardMainScreen_button = new JButton("Add Credit Card", addCard_icon);
@@ -120,11 +165,15 @@ import java.util.ArrayList; //to use arrayList
         withdrawMainScreen_button = new JButton("Withdraw", withdraw_icon);
 
         addDebitCard_button = new JButton("Add Card", addCard_icon);
-        clearDebitCard_button = new JButton("Clear", clear_icon);
-        exitDebitCard_button = new JButton("Exit", exit_icon);
+        clearAddDebit_button = new JButton("Clear", clear_icon);
+
+        addCreditCard_button = new JButton("Add Card", addCard_icon);
+        clearAddCredit_button= new JButton("Clear", clear_icon);
+        exitAddCredit_button = new JButton("Exit", exit_icon);
 
         /* Event Listener for Buttons */
         addClientNameMainScreen_button.addActionListener(this); 
+        changeClientNameMainScreen_button.addActionListener(this);
 
         addDebitCardMainScreen_button.addActionListener(this);
         addCreditCardMainScreen_button.addActionListener(this);
@@ -134,8 +183,12 @@ import java.util.ArrayList; //to use arrayList
         withdrawMainScreen_button.addActionListener(this);
         
         addDebitCard_button.addActionListener(this);
-        clearDebitCard_button.addActionListener(this);
-        exitDebitCard_button.addActionListener(this);
+        clearAddDebit_button.addActionListener(this);
+        exitAddDebit_button.addActionListener(this);
+
+        addCreditCard_button.addActionListener(this);
+        clearAddCredit_button.addActionListener(this);
+        exitAddCredit_button.addActionListener(this);
 
         /* JTextFeild Components */
         clientNameMainScreen_textField = new JTextField();
@@ -159,6 +212,17 @@ import java.util.ArrayList; //to use arrayList
         balanceAddDebit_label.setBounds(118, 415, 120, 25);
         pinNumberAddDebit_label.setBounds(118, 495, 120, 25);
 
+        welcomeUserAddCredit_label.setBounds(100, 100, 500, 35);
+        issuerBankAddCredit_label.setBounds(118, 175, 120, 25);
+        bankAccountAddCredit_label.setBounds(118, 255, 120, 25);
+        cardIdAddCredit_label.setBounds(118, 335, 120, 25);
+        balanceAddCredit_label.setBounds(118, 415, 120, 25);
+        cvcNumberAddCredit_label.setBounds(118, 495, 120, 25);
+        interestAddCredit_label.setBounds(450, 175, 113, 25);
+        dayAddCredit_label.setBounds(442, 280, 42, 25);
+        monthAddCredit_label.setBounds(424, 326, 60, 25);
+        yearAddCredit_label.setBounds(438, 372, 46, 25);
+
         // TextField
         clientNameMainScreen_textField.setBounds(250, 250, 242, 34);
 
@@ -170,6 +234,7 @@ import java.util.ArrayList; //to use arrayList
         
         // Button
         addClientNameMainScreen_button.setBounds(250, 300, 202, 40);
+        changeClientNameMainScreen_button.setBounds(250, 300, 202, 40);
         addDebitCardMainScreen_button.setBounds(794, 139, 202, 40);
         addCreditCardMainScreen_button.setBounds(794, 210, 202, 40);
         checkBalanceMainScreen_button.setBounds(794, 281, 202, 40);
@@ -178,14 +243,22 @@ import java.util.ArrayList; //to use arrayList
         withdrawMainScreen_button.setBounds(794, 494, 202, 40);
 
         addDebitCard_button.setBounds(794, 255, 202, 40);
-        clearDebitCard_button.setBounds(794, 316, 202, 40);
-        exitDebitCard_button.setBounds(794, 377, 202, 40);
+        clearAddDebit_button.setBounds(794, 316, 202, 40);
+        exitAddDebit_button.setBounds(794, 377, 202, 40);
+
+        addCreditCard_button.setBounds(794, 255, 202, 40);
+        clearAddCredit_button.setBounds(794, 316, 202, 40);
+        exitAddCredit_button.setBounds(794, 377, 202, 40);
+
+        // Setting visibility of buttons/components false by default
+        changeClientNameMainScreen_button.setVisible(false);
 
 
         /* Add components to JPanel */
         mainScreen_panel.add(mainScreenWelcome_label);
         mainScreen_panel.add(mainScreenInstruction_label);
         mainScreen_panel.add(addClientNameMainScreen_button);
+        mainScreen_panel.add(changeClientNameMainScreen_button);
         mainScreen_panel.add(clientNameMainScreen_textField);
         mainScreen_panel.add(addDebitCardMainScreen_button);
         mainScreen_panel.add(addCreditCardMainScreen_button);
@@ -206,8 +279,22 @@ import java.util.ArrayList; //to use arrayList
         addDebitCard_panel.add(balanceAddDebit_textField);
         addDebitCard_panel.add(pinNumberAddDebit_textFiled);
         addDebitCard_panel.add(addDebitCard_button);
-        addDebitCard_panel.add(clearDebitCard_button);
-        addDebitCard_panel.add(exitDebitCard_button);
+        addDebitCard_panel.add(clearAddDebit_button);
+        addDebitCard_panel.add(exitAddDebit_button);
+
+        addCreditCard_panel.add(addCreditCard_button);
+        addCreditCard_panel.add(clearAddCredit_button);
+        addCreditCard_panel.add(exitAddCredit_button);
+        addCreditCard_panel.add(welcomeUserAddCredit_label);
+        addCreditCard_panel.add(issuerBankAddCredit_label);
+        addCreditCard_panel.add(bankAccountAddCredit_label);
+        addCreditCard_panel.add(cardIdAddCredit_label);
+        addCreditCard_panel.add(balanceAddCredit_label);
+        addCreditCard_panel.add(cvcNumberAddCredit_label);
+        addCreditCard_panel.add(interestAddCredit_label);
+        addCreditCard_panel.add(dayAddCredit_label);
+        addCreditCard_panel.add(monthAddCredit_label);
+        addCreditCard_panel.add(yearAddCredit_label);
 
         /* set layout of jpanel */
         mainScreen_panel.setLayout(null);
@@ -259,23 +346,39 @@ import java.util.ArrayList; //to use arrayList
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String clientName = clientNameMainScreen_textField.getText();
+      String clientName = clientNameMainScreen_textField.getText(); //setting the client name for instance variable
 
       if (e.getSource() == addClientNameMainScreen_button) {
         if(clientName.isEmpty()) {
           JOptionPane.showMessageDialog(mainJFrame, "Client Name Cannot be Empty", "Alert", JOptionPane.ERROR_MESSAGE, sad_icon);
+        } else {
+          mainScreenWelcome_label.setText("Welcome " + clientName + ","); //Change client name of welcome screen
+          welcomeUserAddDebit_label.setText("User: " + clientName); //Change client name of Debit Card Screen
+          welcomeUserAddCredit_label.setText("User: " + clientName); //Change client name of Credit card screen
+          addClientNameMainScreen_button.setVisible(false);
+          mainScreenInstruction_label.setVisible(false);
+          clientNameMainScreen_textField.setVisible(false);
+          changeClientNameMainScreen_button.setVisible(true);
         }
+      }
 
-        mainScreenWelcome_label.setText("Welcome " + clientName + ",");
+      if(e.getSource()== changeClientNameMainScreen_button) {
+        mainScreenWelcome_label.setText("Welcome User,");
+        addClientNameMainScreen_button.setVisible(true);
+        mainScreenInstruction_label.setVisible(true);
+        clientNameMainScreen_textField.setVisible(true);
+        changeClientNameMainScreen_button.setVisible(false);
+        clientNameMainScreen_textField.setText("");
       }
 
       if (e.getSource() == addDebitCardMainScreen_button ) {
         if(clientName.isEmpty()) {
           JOptionPane.showMessageDialog(mainJFrame, "Client Name Cannot be Empty", "Alert", JOptionPane.ERROR_MESSAGE, sad_icon);
+        } else {
+          mainScreen_panel.setVisible(false);
+          addDebitCard_panel.setVisible(true);
         }
 
-        mainScreen_panel.setVisible(false);
-        addDebitCard_panel.setVisible(true);
       }
 
       if (e.getSource() == addCreditCardMainScreen_button) {
@@ -321,6 +424,16 @@ import java.util.ArrayList; //to use arrayList
 
         mainScreen_panel.setVisible(false);
         withdraw_panel.setVisible(true);
+      }
+
+      if(e.getSource() == exitAddDebit_button) {
+        addDebitCard_panel.setVisible(false);
+        mainScreen_panel.setVisible(true);
+      }
+
+      if(e.getSource() == exitAddCredit_button) {
+        addCreditCard_panel.setVisible(false);
+        mainScreen_panel.setVisible(true);
       }
     }
 
