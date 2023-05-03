@@ -1,0 +1,2 @@
+javac bankGUI.java
+java bankGUI.java

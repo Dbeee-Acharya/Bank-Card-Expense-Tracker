@@ -1,5 +1,3 @@
-
-
 /**
  * The BankGUI class 
  */
@@ -12,16 +10,17 @@ import java.awt.Font; // to set font
 import java.util.ArrayList; //to use arrayList
 
   public class BankGUI implements ActionListener{
-    
-    private JFrame mainJFrame; //creating a new JFrame instance
+
+    //creating a new JFrame instance
+    private JFrame mainJFrame,
+            checkBalance_frame,
+            debitCardInfo_frame,
+            creditCardInfo_frame; 
     
     /* Jpanels */
     private JPanel mainScreen_panel,
             addDebitCard_panel,
             addCreditCard_panel,
-            checkBalance_panel,
-            debitCardInfo_panel,
-            creditCardInfo_panel,
             withdraw_panel;
 
     /* The buttons used for Welcome Screen are declared here
@@ -43,7 +42,12 @@ import java.util.ArrayList; //to use arrayList
             //add credit card button
             addCreditCard_button,
             clearAddCredit_button,
-            exitAddCredit_button;
+            exitAddCredit_button,
+
+            //withdraw buttons
+            withdraw_button,
+            clearWithdraw_button,
+            exitWithdraw_button;
             
     /* JLabel used */
     private JLabel mainScreenWelcome_label,
@@ -67,7 +71,17 @@ import java.util.ArrayList; //to use arrayList
             interestAddCredit_label,
             dayAddCredit_label,
             monthAddCredit_label,
-            yearAddCredit_label;
+            yearAddCredit_label,
+            
+            // Withdraw Screen Labels
+            welcomeUserWithdraw_label,
+            balanceWithdraw_label,
+            cardIdWithdraw_label,
+            withdrawalAmount_label,
+            pinNumberWithdraw_label,
+            dayWithdraw_label,
+            monthWithdraw_label,
+            yearWithdraw_label;
             
 
     /* TextFields used */
@@ -80,22 +94,32 @@ import java.util.ArrayList; //to use arrayList
             balanceAddDebit_textField,
             pinNumberAddDebit_textFiled,
             
+            // credit card screen textFields
             issuerBankAddCredit_textField,
             bankAccountAddCredit_textField,
             cardIdAddCredit_textField,
             balanceAddCredit_textField,
             cvcNumberAddCredit_textFiled,
-            interestAddCredit_textField;
+            interestAddCredit_textField,
+            
+            //withdraw Screen textfields
+            cardIdWithdraw_textField,
+            withdrawalAmount_textField,
+            pinNumberWithdraw_textField;
 
     /* ComboBox used */
-    private JComboBox dateDayAddDebit_combo,
+    private JComboBox<String> dateDayAddDebit_combo,
             dateMonthAddDebit_combo,
-            dateYearAddDebit_combo;
+            dateYearAddDebit_combo,
+            dateDayWithdraw_combo,
+            dateMonthWithdraw_combo,
+            dateYearWithdraw_combo;
 
     private String[] dateDay = {
       "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", 
       "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", 
-      "26", "27", "28", "29", "30", "31"};
+      "26", "27", "28", "29", "30", "31"
+    };
     private String[] dateMonth = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
     private String[] dateYear = {"2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030"};
 
@@ -115,14 +139,14 @@ import java.util.ArrayList; //to use arrayList
      */
     public BankGUI() {
         mainJFrame = new JFrame("Bank GUI"); //Creating the main JFrame 
+        checkBalance_frame = new JFrame("Current Balance"); // Frame for displaying balance information
+        debitCardInfo_frame = new JFrame("Debit Card Information"); // frame for displaying the debit card info
+        creditCardInfo_frame = new JFrame("Credit Card Information"); // frame for displaying the credit card info
 
         /* creating Jpanels*/
         mainScreen_panel = new JPanel();
         addDebitCard_panel = new JPanel();
         addCreditCard_panel = new JPanel();
-        checkBalance_panel = new JPanel();
-        debitCardInfo_panel = new JPanel();
-        creditCardInfo_panel = new JPanel();
         withdraw_panel = new JPanel();
 
         /* Initializing different fonts */
@@ -151,6 +175,15 @@ import java.util.ArrayList; //to use arrayList
         monthAddCredit_label = new JLabel("Month:");
         yearAddCredit_label = new JLabel("Year:");
 
+        welcomeUserWithdraw_label = new JLabel("Welcome User");
+        cardIdWithdraw_label = new JLabel("Card ID:");
+        balanceWithdraw_label = new JLabel("Balance:");
+        withdrawalAmount_label = new JLabel("Withdrawal Amount:");
+        pinNumberWithdraw_label = new JLabel("PIN Number:");
+        dayWithdraw_label = new JLabel("Day:");
+        monthWithdraw_label = new JLabel("Month:");
+        yearWithdraw_label = new JLabel("Year:");
+
         /* setting fonts for JLabel */
         mainScreenWelcome_label.setFont(headerFont);
         mainScreenInstruction_label.setFont(inputLabelFont);
@@ -170,25 +203,37 @@ import java.util.ArrayList; //to use arrayList
         dayAddCredit_label.setFont(inputLabelFont);
         monthAddCredit_label.setFont(inputLabelFont);
         yearAddCredit_label.setFont(inputLabelFont);
+        welcomeUserWithdraw_label.setFont(headerFont);
+        cardIdWithdraw_label.setFont(inputLabelFont);
+        balanceWithdraw_label.setFont(headerFont);
+        pinNumberWithdraw_label.setFont(inputLabelFont);
+        withdrawalAmount_label.setFont(inputLabelFont);
+        dayWithdraw_label.setFont(inputLabelFont);
+        monthWithdraw_label.setFont(inputLabelFont);
+        yearWithdraw_label.setFont(inputLabelFont);
 
         /*JButton Components*/
         addClientNameMainScreen_button = new JButton("Add Client", addUser_icon);
         changeClientNameMainScreen_button = new JButton("Change Client", changeClient_icon);
-        exitAddDebit_button = new JButton("Exit", exit_icon);
 
         addDebitCardMainScreen_button = new JButton("Add Debit Card", addCard_icon);
         addCreditCardMainScreen_button = new JButton("Add Credit Card", addCard_icon);
         checkBalanceMainScreen_button = new JButton("Check Balance", checkBalance_icon);
         debitCardInfoMainScreen_button = new JButton("Debit Card Info", card_icon);
         creditCardInfoMainScreen_button = new JButton("Credit Card Info", card_icon);
-        withdrawMainScreen_button = new JButton("Withdraw", withdraw_icon);
+        withdrawMainScreen_button = new JButton(" Withdraw", withdraw_icon);
 
         addDebitCard_button = new JButton("Add Card", addCard_icon);
         clearAddDebit_button = new JButton("Clear", clear_icon);
+        exitAddDebit_button = new JButton("Exit", exit_icon);
 
         addCreditCard_button = new JButton("Add Card", addCard_icon);
         clearAddCredit_button= new JButton("Clear", clear_icon);
         exitAddCredit_button = new JButton("Exit", exit_icon);
+
+        withdraw_button = new JButton("Add Card", addCard_icon);
+        clearWithdraw_button= new JButton("Clear", clear_icon);
+        exitWithdraw_button = new JButton("Exit", exit_icon);
 
         /* Event Listener for Buttons */
         addClientNameMainScreen_button.addActionListener(this); 
@@ -209,6 +254,10 @@ import java.util.ArrayList; //to use arrayList
         clearAddCredit_button.addActionListener(this);
         exitAddCredit_button.addActionListener(this);
 
+        withdraw_button.addActionListener(this);
+        clearWithdraw_button.addActionListener(this);
+        exitWithdraw_button.addActionListener(this);
+
         /* JTextFeild Components */
         clientNameMainScreen_textField = new JTextField();
         
@@ -225,10 +274,18 @@ import java.util.ArrayList; //to use arrayList
         cvcNumberAddCredit_textFiled = new JTextField();
         interestAddCredit_textField = new JTextField();
 
+        cardIdWithdraw_textField = new JTextField();
+        withdrawalAmount_textField = new JTextField();
+        pinNumberWithdraw_textField = new JTextField();
+
         /* JcomboBox components */
-        dateDayAddDebit_combo = new JComboBox(dateDay);
-        dateMonthAddDebit_combo = new JComboBox(dateMonth);
-        dateYearAddDebit_combo = new JComboBox(dateYear);
+        dateDayAddDebit_combo = new JComboBox<String>(dateDay);
+        dateMonthAddDebit_combo = new JComboBox<String>(dateMonth);
+        dateYearAddDebit_combo = new JComboBox<String>(dateYear);
+
+        dateDayWithdraw_combo = new JComboBox<String>(dateDay);
+        dateMonthWithdraw_combo = new JComboBox<String>(dateMonth);
+        dateYearWithdraw_combo = new JComboBox<String>(dateYear);
 
         /*setBounds for components*/
 
@@ -250,9 +307,19 @@ import java.util.ArrayList; //to use arrayList
         balanceAddCredit_label.setBounds(118, 415, 120, 25);
         cvcNumberAddCredit_label.setBounds(118, 495, 120, 25);
         interestAddCredit_label.setBounds(450, 175, 113, 25);
+        withdrawalAmount_label.setBounds(118, 302, 242, 35);
         dayAddCredit_label.setBounds(442, 280, 42, 25);
         monthAddCredit_label.setBounds(424, 326, 60, 25);
         yearAddCredit_label.setBounds(438, 372, 46, 25);
+
+        welcomeUserWithdraw_label.setBounds(100, 100, 392, 35);
+        balanceWithdraw_label.setBounds(100, 135, 392, 35);
+        cardIdWithdraw_label.setBounds(118, 200, 72, 25);
+        pinNumberWithdraw_label.setBounds(118, 355, 104, 25);
+        withdrawalAmount_label.setBounds(118, 277, 160, 25);
+        dayWithdraw_label.setBounds(438, 225, 42, 25);
+        monthWithdraw_label.setBounds(420, 271, 60, 25);
+        yearWithdraw_label.setBounds(434, 317, 46, 25);
 
         // TextField
         clientNameMainScreen_textField.setBounds(250, 250, 242, 34);
@@ -269,6 +336,10 @@ import java.util.ArrayList; //to use arrayList
         balanceAddCredit_textField.setBounds(118, 440, 242, 35);
         cvcNumberAddCredit_textFiled.setBounds(118, 520, 242, 35);
         interestAddCredit_textField.setBounds(450, 200, 145, 35);
+
+        cardIdWithdraw_textField.setBounds(118, 225, 242, 35);
+        withdrawalAmount_textField.setBounds(118, 302, 242, 35);
+        pinNumberWithdraw_textField.setBounds(118, 380, 242, 35);
         
         // Button
         addClientNameMainScreen_button.setBounds(250, 300, 202, 40);
@@ -288,10 +359,18 @@ import java.util.ArrayList; //to use arrayList
         clearAddCredit_button.setBounds(794, 316, 202, 40);
         exitAddCredit_button.setBounds(794, 377, 202, 40);
 
+        withdraw_button.setBounds(794, 255, 202, 40);
+        clearWithdraw_button.setBounds(794, 316, 202, 40);
+        exitWithdraw_button.setBounds(794, 377, 202, 40);
+
         // Combobox
         dateDayAddDebit_combo.setBounds(490, 280, 105, 34);
         dateMonthAddDebit_combo.setBounds(490, 326, 105, 34);
         dateYearAddDebit_combo.setBounds(490, 372, 105, 34);
+
+        dateDayWithdraw_combo.setBounds(486, 225, 105, 35);
+        dateMonthWithdraw_combo.setBounds(486, 271, 105, 35);
+        dateYearWithdraw_combo.setBounds(486, 317, 105, 35);
 
         // Setting visibility of buttons/components false by default
         changeClientNameMainScreen_button.setVisible(false);
@@ -347,6 +426,24 @@ import java.util.ArrayList; //to use arrayList
         addCreditCard_panel.add(dateMonthAddDebit_combo);
         addCreditCard_panel.add(dateYearAddDebit_combo);
 
+        withdraw_panel.add(welcomeUserWithdraw_label);
+        withdraw_panel.add(balanceWithdraw_label);
+        withdraw_panel.add(cardIdWithdraw_label);
+        withdraw_panel.add(withdrawalAmount_label);
+        withdraw_panel.add(pinNumberWithdraw_label);
+        withdraw_panel.add(dayWithdraw_label);
+        withdraw_panel.add(monthWithdraw_label);
+        withdraw_panel.add(yearWithdraw_label);
+        withdraw_panel.add(cardIdWithdraw_textField);
+        withdraw_panel.add(withdrawalAmount_textField);
+        withdraw_panel.add(pinNumberWithdraw_textField);
+        withdraw_panel.add(withdraw_button);
+        withdraw_panel.add(clearWithdraw_button);
+        withdraw_panel.add(exitWithdraw_button);
+        withdraw_panel.add(dateDayWithdraw_combo);
+        withdraw_panel.add(dateMonthWithdraw_combo);
+        withdraw_panel.add(dateYearWithdraw_combo);
+
         /* set layout of jpanel */
         mainScreen_panel.setLayout(null);
         mainScreen_panel.setSize(1200, 672);
@@ -386,20 +483,37 @@ import java.util.ArrayList; //to use arrayList
         mainJFrame.add(mainScreen_panel);
         mainJFrame.add(addDebitCard_panel);
         mainJFrame.add(addCreditCard_panel);
+        mainJFrame.add(withdraw_panel);
 
-        
-        mainJFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);       
+        // JFrame methods        
+        mainJFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // making sure the JFrame is fully closed instead of just being not visible   
         mainJFrame.setLayout(null); //removing the default layout 
         mainJFrame.setSize(1200, 672); //setting the width and height of the JFrame
+        mainJFrame.setLocationRelativeTo(null); // to make sure the frame appears from the middle  
+        mainJFrame.setResizable(false);  
         mainJFrame.setVisible(true); //setting the visibility of mainFrame
 
+        debitCardInfo_frame.setLayout(null); //removing the default layout 
+        debitCardInfo_frame.setSize(1200, 672); //setting the width and height of the JFrame
+        debitCardInfo_frame.setLocationRelativeTo(null); // to make sure the frame appears from the middle    
+        debitCardInfo_frame.setVisible(false); //setting the visibility of mainFrame
+  
+        creditCardInfo_frame.setLayout(null); //removing the default layout 
+        creditCardInfo_frame.setSize(1200, 672); //setting the width and height of the JFrame
+        creditCardInfo_frame.setLocationRelativeTo(null); // to make sure the frame appears from the middle    
+        creditCardInfo_frame.setVisible(false); //setting the visibility of mainFrame
+
+        checkBalance_frame.setLayout(null); //removing the default layout 
+        checkBalance_frame.setSize(390, 220); //setting the width and height of the JFrame
+        checkBalance_frame.setLocationRelativeTo(null); // to make sure the frame appears from the middle    
+        checkBalance_frame.setVisible(false); //setting the visibility of mainFrame
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
       String clientName = clientNameMainScreen_textField.getText(); //setting the client name for instance variable
 
-      if (e.getSource() == addClientNameMainScreen_button) {
+      if(e.getSource() == addClientNameMainScreen_button) {
         if(clientName.isEmpty()) {
           JOptionPane.showMessageDialog(mainJFrame, "Client Name Cannot be Empty", "Alert", JOptionPane.ERROR_MESSAGE, sad_icon);
         } else {
@@ -411,18 +525,16 @@ import java.util.ArrayList; //to use arrayList
           clientNameMainScreen_textField.setVisible(false);
           changeClientNameMainScreen_button.setVisible(true);
         }
-      }
 
-      if(e.getSource()== changeClientNameMainScreen_button) {
+      } else if(e.getSource()== changeClientNameMainScreen_button) {
         mainScreenWelcome_label.setText("Welcome User,");
         addClientNameMainScreen_button.setVisible(true);
         mainScreenInstruction_label.setVisible(true);
         clientNameMainScreen_textField.setVisible(true);
         changeClientNameMainScreen_button.setVisible(false);
         clientNameMainScreen_textField.setText("");
-      }
 
-      if (e.getSource() == addDebitCardMainScreen_button ) {
+      } else if(e.getSource() == addDebitCardMainScreen_button ) {
         if(clientName.isEmpty()) {
           JOptionPane.showMessageDialog(mainJFrame, "Client Name Cannot be Empty", "Alert", JOptionPane.ERROR_MESSAGE, sad_icon);
         } else {
@@ -430,63 +542,57 @@ import java.util.ArrayList; //to use arrayList
           addDebitCard_panel.setVisible(true);
         }
 
-      }
-
-      if (e.getSource() == addCreditCardMainScreen_button) {
+      } else if (e.getSource() == addCreditCardMainScreen_button) {
         if(clientName.isEmpty()) {
           JOptionPane.showMessageDialog(mainJFrame, "Client Name Cannot be Empty", "Alert", JOptionPane.ERROR_MESSAGE, sad_icon);
+        } else {
+          mainScreen_panel.setVisible(false);
+          addCreditCard_panel.setVisible(true);
         }
 
-        mainScreen_panel.setVisible(false);
-        addCreditCard_panel.setVisible(true);
-      }
-
-      if (e.getSource() == checkBalanceMainScreen_button) {
+      } else if (e.getSource() == checkBalanceMainScreen_button) {
         if(clientName.isEmpty()) {
           JOptionPane.showMessageDialog(mainJFrame, "Client Name Cannot be Empty", "Alert", JOptionPane.ERROR_MESSAGE, sad_icon);
+        } else {
+          checkBalance_frame.setVisible(true);
         }
 
-        mainScreen_panel.setVisible(false);
-        checkBalance_panel.setVisible(true);
-      }
-
-      if (e.getSource() == debitCardInfoMainScreen_button) {
+      } else if (e.getSource() == debitCardInfoMainScreen_button) {
         if(clientName.isEmpty()) {
           JOptionPane.showMessageDialog(mainJFrame, "Client Name Cannot be Empty", "Alert", JOptionPane.ERROR_MESSAGE, sad_icon);
+        } else {
+          debitCardInfo_frame.setVisible(true);
         }
 
-        mainScreen_panel.setVisible(false);
-        debitCardInfo_panel.setVisible(true);
-      }
-
-      if (e.getSource() == creditCardInfoMainScreen_button) {
+      } else if (e.getSource() == creditCardInfoMainScreen_button) {
         if(clientName.isEmpty()) {
           JOptionPane.showMessageDialog(mainJFrame, "Client Name Cannot be Empty", "Alert", JOptionPane.ERROR_MESSAGE, sad_icon);
+        } else {
+          creditCardInfo_frame.setVisible(true);
         }
 
-        mainScreen_panel.setVisible(false);
-        creditCardInfo_panel.setVisible(true);
-      }
-
-      if (e.getSource() == withdrawMainScreen_button) {
+      } else if (e.getSource() == withdrawMainScreen_button) {
         if(clientName.isEmpty()) {
           JOptionPane.showMessageDialog(mainJFrame, "Client Name Cannot be Empty", "Alert", JOptionPane.ERROR_MESSAGE, sad_icon);
+        } else {
+          mainScreen_panel.setVisible(false);
+          withdraw_panel.setVisible(true);
         }
 
-        mainScreen_panel.setVisible(false);
-        withdraw_panel.setVisible(true);
-      }
-
-      if(e.getSource() == exitAddDebit_button) {
+      } else if(e.getSource() == exitAddDebit_button) {
         addDebitCard_panel.setVisible(false);
         mainScreen_panel.setVisible(true);
-      }
 
-      if(e.getSource() == exitAddCredit_button) {
+      } else if(e.getSource() == exitAddCredit_button) {
         addCreditCard_panel.setVisible(false);
+        mainScreen_panel.setVisible(true);
+
+      } else if(e.getSource() == exitWithdraw_button) {
+        withdraw_panel.setVisible(false);
         mainScreen_panel.setVisible(true);
       }
     }
+
 
     public static void main (String[] Args) {
       new BankGUI();
