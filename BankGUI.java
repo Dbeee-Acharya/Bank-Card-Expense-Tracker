@@ -33,6 +33,7 @@ import java.util.ArrayList; //to use arrayList
             debitCardInfoMainScreen_button,
             creditCardInfoMainScreen_button,
             withdrawMainScreen_button,
+            cancelCreditMainScreen_button,
 
             //add debit card buttons
             addDebitCard_button,
@@ -115,6 +116,7 @@ import java.util.ArrayList; //to use arrayList
             dateMonthWithdraw_combo,
             dateYearWithdraw_combo;
 
+    // Arrays to store date         
     private String[] dateDay = {
       "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", 
       "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", 
@@ -122,6 +124,7 @@ import java.util.ArrayList; //to use arrayList
     };
     private String[] dateMonth = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
     private String[] dateYear = {"2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030"};
+    ArrayList<BankCard> bankCard_ArrayList = new ArrayList<BankCard>();
 
     /* Icons */
     private Icon addUser_icon = new ImageIcon("./icons/addUser.png"); //icon for add user
@@ -133,6 +136,7 @@ import java.util.ArrayList; //to use arrayList
     private Icon clear_icon = new ImageIcon("./icons/clear.png"); // icon for clear info button
     private Icon exit_icon = new ImageIcon("./icons/exit.png"); // exit icon
     private Icon changeClient_icon = new ImageIcon("./icons/changeUser.png"); // change user icon
+    private Icon cancelCard_icon = new ImageIcon("./icons/cancelCard.png"); // cancel credit icon
        
     /**
      * ALl the Jframe components are made inside its constructor
@@ -222,6 +226,7 @@ import java.util.ArrayList; //to use arrayList
         debitCardInfoMainScreen_button = new JButton("Debit Card Info", card_icon);
         creditCardInfoMainScreen_button = new JButton("Credit Card Info", card_icon);
         withdrawMainScreen_button = new JButton(" Withdraw", withdraw_icon);
+        cancelCreditMainScreen_button = new JButton("Cancel Credit", cancelCard_icon);
 
         addDebitCard_button = new JButton("Add Card", addCard_icon);
         clearAddDebit_button = new JButton("Clear", clear_icon);
@@ -245,6 +250,7 @@ import java.util.ArrayList; //to use arrayList
         debitCardInfoMainScreen_button.addActionListener(this);
         creditCardInfoMainScreen_button.addActionListener(this);
         withdrawMainScreen_button.addActionListener(this);
+        cancelCreditMainScreen_button.addActionListener(this);
         
         addDebitCard_button.addActionListener(this);
         clearAddDebit_button.addActionListener(this);
@@ -344,12 +350,13 @@ import java.util.ArrayList; //to use arrayList
         // Button
         addClientNameMainScreen_button.setBounds(250, 300, 202, 40);
         changeClientNameMainScreen_button.setBounds(250, 300, 202, 40);
-        addDebitCardMainScreen_button.setBounds(794, 139, 202, 40);
-        addCreditCardMainScreen_button.setBounds(794, 210, 202, 40);
-        checkBalanceMainScreen_button.setBounds(794, 281, 202, 40);
-        debitCardInfoMainScreen_button.setBounds(794, 352, 202, 40);
-        creditCardInfoMainScreen_button.setBounds(794, 423, 202, 40);
-        withdrawMainScreen_button.setBounds(794, 494, 202, 40);
+        addDebitCardMainScreen_button.setBounds(790, 103, 202, 40);
+        addCreditCardMainScreen_button.setBounds(790, 174, 202, 40);
+        checkBalanceMainScreen_button.setBounds(790, 245, 202, 40);
+        debitCardInfoMainScreen_button.setBounds(790, 316, 202, 40);
+        creditCardInfoMainScreen_button.setBounds(790, 387, 202, 40);
+        withdrawMainScreen_button.setBounds(790, 458, 202, 40);
+        cancelCreditMainScreen_button.setBounds(790, 529, 202, 40);
 
         addDebitCard_button.setBounds(794, 255, 202, 40);
         clearAddDebit_button.setBounds(794, 316, 202, 40);
@@ -387,6 +394,7 @@ import java.util.ArrayList; //to use arrayList
         mainScreen_panel.add(debitCardInfoMainScreen_button);
         mainScreen_panel.add(creditCardInfoMainScreen_button);
         mainScreen_panel.add(withdrawMainScreen_button);
+        mainScreen_panel.add(cancelCreditMainScreen_button);
 
         addDebitCard_panel.add(welcomeUserAddDebit_label);
         addDebitCard_panel.add(issuerBankAddDebit_label);
@@ -458,21 +466,6 @@ import java.util.ArrayList; //to use arrayList
         addCreditCard_panel.setLayout(null);
         addCreditCard_panel.setSize(1200, 672);
         addCreditCard_panel.setVisible(false);
-
-        // Show Balance Panel
-        checkBalance_panel.setLayout(null);
-        checkBalance_panel.setSize(1200, 672);
-        checkBalance_panel.setVisible(false);
-
-        // Debit Card info panel
-        debitCardInfo_panel.setLayout(null);
-        debitCardInfo_panel.setSize(1200, 672);
-        debitCardInfo_panel.setVisible(false);
-
-        // Credit Card Info Panel
-        creditCardInfo_panel.setLayout(null);
-        creditCardInfo_panel.setSize(1200, 672);
-        creditCardInfo_panel.setVisible(false);
 
         // Withdraw Panel
         withdraw_panel.setLayout(null);
@@ -590,7 +583,27 @@ import java.util.ArrayList; //to use arrayList
       } else if(e.getSource() == exitWithdraw_button) {
         withdraw_panel.setVisible(false);
         mainScreen_panel.setVisible(true);
+
+      } else if(e.getSource() == addDebitCard_button) {
+        if(e.getSource() == addDebitCard_button) {
+          String issuerBank = issuerBankAddDebit_textField.getText();
+          String bankAccount = bankAccountAddDebit_textField.getText();
+          int cardId;
+          int balanceAmount;
+          int pinNumber;
+
+          try {
+            cardId = Integer.parseInt(cardIdAddDebit_textField.getText());
+            balanceAmount = Integer.parseInt(balanceAddDebit_textField.getText());
+            pinNumber = Integer.parseInt(pinNumberAddDebit_textFiled.getText());
+          } catch (Exception ex) {
+            JOptionPane.showMessageDialog(mainJFrame, "Trying to pass string to an integer field", "Error", JOptionPane.ERROR_MESSAGE, sad_icon);
+          }
+
+          System.out.println(bankAccount + issuerBank + clientName);
+        }
       }
+
     }
 
 
