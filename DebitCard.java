@@ -73,13 +73,18 @@ public class DebitCard extends BankCard {
         
         //Checking if has withdrawn is true
         if(hasWithdrawn) { 
+            System.out.println("________________________________________________________________________________________");
             super.display(); //calls the display method from the parent class 
             System.out.println("Pin Number: "+ pinNumber);
             System.out.println("Amount Withdrawn: " + withdrawalAmount);
             System.out.println("Date of withdrawal: " + dateOfWithdrawal);
+            System.out.println("________________________________________________________________________________________");
         } else { 
             //to print if money was not withdrawn from the clients account
+            System.out.println("________________________________________________________________________________________");
             System.out.println("Balance: Nrs." + get_balance()); 
+            System.out.println("________________________________________________________________________________________");
+            System.out.println("Any record of money withdrawn not found");
         }
 
     }

@@ -13,9 +13,7 @@ import java.util.ArrayList; //to use arrayList
 
     //creating a new JFrame instance
     private JFrame mainJFrame,
-            checkBalance_frame,
-            debitCardInfo_frame,
-            creditCardInfo_frame; 
+            checkBalance_frame; 
     
     /* Jpanels */
     private JPanel mainScreen_panel,
@@ -154,8 +152,6 @@ import java.util.ArrayList; //to use arrayList
 
       mainJFrame = new JFrame("Bank GUI"); //Creating the main JFrame 
       checkBalance_frame = new JFrame("Current Balance"); // Frame for displaying balance information
-      debitCardInfo_frame = new JFrame("Debit Card Information"); // frame for displaying the debit card info
-      creditCardInfo_frame = new JFrame("Credit Card Information"); // frame for displaying the credit card info
 
       /* creating Jpanels*/
       mainScreen_panel = new JPanel();
@@ -251,7 +247,7 @@ import java.util.ArrayList; //to use arrayList
       clearAddCredit_button= new JButton("Clear", clear_icon);
       exitAddCredit_button = new JButton("Exit", exit_icon);
 
-      withdraw_button = new JButton("Add Card", addCard_icon);
+      withdraw_button = new JButton("Withdraw", withdraw_icon);
       clearWithdraw_button= new JButton("Clear", clear_icon);
       exitWithdraw_button = new JButton("Exit", exit_icon);
 
@@ -507,16 +503,6 @@ import java.util.ArrayList; //to use arrayList
       mainJFrame.setResizable(false);  
       mainJFrame.setVisible(true); //setting the visibility of mainFrame
 
-      debitCardInfo_frame.setLayout(null); //removing the default layout 
-      debitCardInfo_frame.setSize(480, 280); //setting the width and height of the JFrame
-      debitCardInfo_frame.setLocationRelativeTo(null); // to make sure the frame appears from the middle    
-      debitCardInfo_frame.setVisible(false); //setting the visibility of mainFrame
-
-      creditCardInfo_frame.setLayout(null); //removing the default layout 
-      creditCardInfo_frame.setSize(1200, 672); //setting the width and height of the JFrame
-      creditCardInfo_frame.setLocationRelativeTo(null); // to make sure the frame appears from the middle    
-      creditCardInfo_frame.setVisible(false); //setting the visibility of mainFrame
-
       checkBalance_frame.setLayout(null); //removing the default layout 
       checkBalance_frame.setSize(390, 220); //setting the width and height of the JFrame
       checkBalance_frame.setLocationRelativeTo(null); // to make sure the frame appears from the middle    
@@ -526,6 +512,8 @@ import java.util.ArrayList; //to use arrayList
     @Override
     public void actionPerformed(ActionEvent e) {
       String clientName = clientNameMainScreen_textField.getText(); //setting the client name for instance variable
+      Boolean debitExists = false;
+      Boolean creditExists = false;
 
       if(e.getSource() == addClientNameMainScreen_button) {
         if(clientName.isEmpty()) {
@@ -567,7 +555,6 @@ import java.util.ArrayList; //to use arrayList
         }
 
       } else if (e.getSource() == checkBalanceMainScreen_button) {
-        Boolean debitCardExists = false;
 
         if(clientName.isEmpty()) {
           JOptionPane.showMessageDialog(mainJFrame, "Client Name Cannot be Empty", "Alert", JOptionPane.ERROR_MESSAGE, sad_icon);
@@ -576,11 +563,11 @@ import java.util.ArrayList; //to use arrayList
             if(bankCard_obj instanceof DebitCard) {
               DebitCard debitCard_obj = (DebitCard) bankCard_obj;
               currentBalanceCheckBalance_label.setText("Balance: Rs." + String.valueOf(debitCard_obj.get_balance()));
-              debitCardExists = true;
+              debitExists = true;
             }
           }
           
-          if(!debitCardExists) {
+          if(!debitExists) {
             JOptionPane.showMessageDialog(mainJFrame, "Debit Card does not exist", "Card not Fount", JOptionPane.ERROR_MESSAGE, sad_icon);
           } else {
             checkBalance_frame.setVisible(true);
@@ -588,7 +575,6 @@ import java.util.ArrayList; //to use arrayList
         }
 
       } else if (e.getSource() == debitCardInfoMainScreen_button) {
-        Boolean debitCardExists = false;
 
         if(clientName.isEmpty()) {
           JOptionPane.showMessageDialog(mainJFrame, "Client Name Cannot be Empty", "Alert", JOptionPane.ERROR_MESSAGE, sad_icon);
@@ -599,36 +585,46 @@ import java.util.ArrayList; //to use arrayList
             if(bankcard_obj instanceof DebitCard) {
               DebitCard debitCard_obj = (DebitCard) bankcard_obj;
               debitCard_obj.display();
-              debitCardExists = true;
+              debitExists = true;
             }
           }
 
-          if(!debitCardExists) {
-            JOptionPane.showMessageDialog(mainJFrame, "Debit Card not found", "No card found", JOptionPane.ERROR_MESSAGE, sad_icon);
-          }
-          
+          if(!debitExists) {
+            JOptionPane.showMessageDialog(mainJFrame, "Please add a debit card", "No card found", JOptionPane.ERROR_MESSAGE, sad_icon);
+          }  
         }
 
       } else if (e.getSource() == creditCardInfoMainScreen_button) {
         if(clientName.isEmpty()) {
           JOptionPane.showMessageDialog(mainJFrame, "Client Name Cannot be Empty", "Alert", JOptionPane.ERROR_MESSAGE, sad_icon);
         } else {
-          creditCardInfo_frame.setVisible(true);
+          //
         }
 
       } else if (e.getSource() == withdrawMainScreen_button) {
         if(clientName.isEmpty()) {
           JOptionPane.showMessageDialog(mainJFrame, "Client Name Cannot be Empty", "Alert", JOptionPane.ERROR_MESSAGE, sad_icon);
         } else {
-          mainScreen_panel.setVisible(false);
-          withdraw_panel.setVisible(true);
-        }
+          for(BankCard bankCard_obj : bankCard_ArrayList) {
+            if(bankCard_obj instanceof DebitCard) {
+              debitExists = true;
+            }
+          }
 
+          if(debitExists) {
+            mainScreen_panel.setVisible(false);
+            withdraw_panel.setVisible(true);
+          } else {
+            JOptionPane.showMessageDialog(mainJFrame, "Please add a debit card", "Card not found", JOptionPane.ERROR_MESSAGE, stopHand_icon);           
+          }
+        }
+        
       } else if(e.getSource() == exitAddDebit_button) {
         addDebitCard_panel.setVisible(false);
         mainScreen_panel.setVisible(true);
 
       } else if(e.getSource() == clearAddDebit_button) {
+        JOptionPane.showMessageDialog(mainJFrame, "All fields cleared", "cleared", JOptionPane.INFORMATION_MESSAGE, clear_icon);  
         issuerBankAddDebit_textField.setText("");
         bankAccountAddDebit_textField.setText("");
         cardIdAddDebit_textField.setText("");
@@ -640,6 +636,7 @@ import java.util.ArrayList; //to use arrayList
         mainScreen_panel.setVisible(true);
 
       } else if(e.getSource() == clearAddCredit_button) {
+        JOptionPane.showMessageDialog(mainJFrame, "All fields cleared", "cleared", JOptionPane.INFORMATION_MESSAGE, clear_icon); 
         issuerBankAddDebit_textField.setText("");
         bankAccountAddDebit_textField.setText("");
         cardIdAddDebit_textField.setText("");
@@ -652,6 +649,7 @@ import java.util.ArrayList; //to use arrayList
         mainScreen_panel.setVisible(true);
 
       } else if(e.getSource() == clearWithdraw_button) {
+        JOptionPane.showMessageDialog(mainJFrame, "All fields cleared", "cleared", JOptionPane.INFORMATION_MESSAGE, clear_icon); 
         cardIdWithdraw_textField.setText("");
         withdrawalAmount_textField.setText("");
         pinNumberWithdraw_textField.setText("");
@@ -669,8 +667,6 @@ import java.util.ArrayList; //to use arrayList
           int cardId = Integer.parseInt(cardIdAddDebit_textField.getText());
           int balanceAmount = Integer.parseInt(balanceAddDebit_textField.getText());
           int pinNumber = Integer.parseInt(pinNumberAddDebit_textFiled.getText());
-
-          Boolean debitExists = false; // to check if debit card already exits
 
           if(issuerBank.isEmpty() || clientName.isEmpty() || bankAccount.isEmpty()) {
             JOptionPane.showMessageDialog(mainJFrame, "Empty Field Detected", "Error", JOptionPane.ERROR_MESSAGE, sad_icon);
@@ -691,13 +687,48 @@ import java.util.ArrayList; //to use arrayList
               JOptionPane.showMessageDialog(mainJFrame, "Debit card added successfully", "Success", JOptionPane.INFORMATION_MESSAGE, happy_icon); // show success message
               addDebitCard_panel.setVisible(false);
               mainScreen_panel.setVisible(true);
+              debitExists = true;
             }
           }  
 
         } catch(NumberFormatException numFormat_ex) {
           JOptionPane.showMessageDialog(mainJFrame, "Card ID, Balance Amount or Pin Number Invalid", "Error", JOptionPane.ERROR_MESSAGE, sad_icon);
         } 
-      } 
+
+      } else if(e.getSource() == withdraw_button) {
+        try {
+          int cardId = Integer.parseInt(cardIdWithdraw_textField.getText());
+          int withdrawalAmount = Integer.parseInt(withdrawalAmount_textField.getText());
+          int pinNumber = Integer.parseInt(pinNumberWithdraw_textField.getText());
+
+          String dateDay = dateDayWithdraw_combo.getSelectedItem().toString();
+          String dateMonth = dateMonthWithdraw_combo.getSelectedItem().toString();
+          String dateYear = dateYearWithdraw_combo.getSelectedItem().toString();
+          String date = dateDay + "/" + dateMonth + "/" + dateYear; // Converting the date into a string
+
+          DebitCard debitCard_obj = null;
+          for(BankCard bankCard_obj : bankCard_ArrayList) {
+            if(bankCard_obj instanceof DebitCard) {
+              debitCard_obj = (DebitCard) bankCard_obj;
+              debitExists = true;
+            }
+          }
+
+          if(debitCard_obj != null) {
+            if(pinNumber == debitCard_obj.get_pinNumber() && withdrawalAmount <= debitCard_obj.get_balance()) {
+              debitCard_obj.withdraw(pinNumber, withdrawalAmount, date);
+              JOptionPane.showMessageDialog(mainJFrame, "User: " + clientName + "\n" + "Amount: Rs." + String.valueOf(withdrawalAmount) + "\n" + date, "Successfully withdrawn", JOptionPane.INFORMATION_MESSAGE, happy_icon);
+            } else {
+              JOptionPane.showMessageDialog(mainJFrame, "Please check your PIN and Balance", "Transaction unsuccessful", JOptionPane.ERROR_MESSAGE, sad_icon);
+            }
+          } else {
+            JOptionPane.showMessageDialog(mainJFrame, "Please add a debit card", "Card not found", JOptionPane.ERROR_MESSAGE, stopHand_icon);
+          }
+
+        } catch(NumberFormatException ex) {
+          JOptionPane.showMessageDialog(mainJFrame, "Card ID, Withdrawal Amount or Pin Number Invalid", "Error", JOptionPane.ERROR_MESSAGE, sad_icon);
+        }
+      }
 
     }
 
