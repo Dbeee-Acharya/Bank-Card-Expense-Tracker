@@ -82,7 +82,11 @@ import java.util.ArrayList; //to use arrayList
             pinNumberWithdraw_label,
             dayWithdraw_label,
             monthWithdraw_label,
-            yearWithdraw_label;
+            yearWithdraw_label,
+            
+            // Check Balance Screen Label
+            welcomeUserCheckBalance_label,
+            currentBalanceCheckBalance_label;
             
 
     /* TextFields used */
@@ -138,7 +142,9 @@ import java.util.ArrayList; //to use arrayList
     private Icon exit_icon = new ImageIcon("./icons/exit.png"); // exit icon
     private Icon changeClient_icon = new ImageIcon("./icons/changeUser.png"); // change user icon
     private Icon cancelCard_icon = new ImageIcon("./icons/cancelCard.png"); // cancel credit icon
-       
+    private Icon stopHand_icon = new ImageIcon("./icons/stopHand.png"); // hand icon
+    private Icon happy_icon = new ImageIcon("./icons/happyIcon.png");  // happy icon
+    
     /**
      * ALl the Jframe components are made inside its constructor
      */
@@ -192,6 +198,9 @@ import java.util.ArrayList; //to use arrayList
       monthWithdraw_label = new JLabel("Month:");
       yearWithdraw_label = new JLabel("Year:");
 
+      welcomeUserCheckBalance_label = new JLabel("Welcome User");
+      currentBalanceCheckBalance_label = new JLabel("balance");
+
       /* setting fonts for JLabel */
       mainScreenWelcome_label.setFont(headerFont);
       mainScreenInstruction_label.setFont(inputLabelFont);
@@ -219,6 +228,8 @@ import java.util.ArrayList; //to use arrayList
       dayWithdraw_label.setFont(inputLabelFont);
       monthWithdraw_label.setFont(inputLabelFont);
       yearWithdraw_label.setFont(inputLabelFont);
+      welcomeUserAddDebit_label.setFont(headerFont);
+      currentBalanceCheckBalance_label.setFont(headerFont);
 
       /*JButton Components*/
       addClientNameMainScreen_button = new JButton("Add Client", addUser_icon);
@@ -330,6 +341,9 @@ import java.util.ArrayList; //to use arrayList
       dayWithdraw_label.setBounds(438, 225, 42, 25);
       monthWithdraw_label.setBounds(420, 271, 60, 25);
       yearWithdraw_label.setBounds(434, 317, 46, 25);
+
+      welcomeUserCheckBalance_label.setBounds(50, 45, 280, 35);
+      currentBalanceCheckBalance_label.setBounds(50, 110, 312, 35);
 
       // TextField
       clientNameMainScreen_textField.setBounds(250, 250, 242, 34);
@@ -456,6 +470,9 @@ import java.util.ArrayList; //to use arrayList
       withdraw_panel.add(dateMonthWithdraw_combo);
       withdraw_panel.add(dateYearWithdraw_combo);
 
+      checkBalance_frame.add(welcomeUserCheckBalance_label);
+      checkBalance_frame.add(currentBalanceCheckBalance_label);
+
       /* set layout of jpanel */
       mainScreen_panel.setLayout(null);
       mainScreen_panel.setSize(1200, 672);
@@ -491,7 +508,7 @@ import java.util.ArrayList; //to use arrayList
       mainJFrame.setVisible(true); //setting the visibility of mainFrame
 
       debitCardInfo_frame.setLayout(null); //removing the default layout 
-      debitCardInfo_frame.setSize(1200, 672); //setting the width and height of the JFrame
+      debitCardInfo_frame.setSize(480, 280); //setting the width and height of the JFrame
       debitCardInfo_frame.setLocationRelativeTo(null); // to make sure the frame appears from the middle    
       debitCardInfo_frame.setVisible(false); //setting the visibility of mainFrame
 
@@ -509,7 +526,6 @@ import java.util.ArrayList; //to use arrayList
     @Override
     public void actionPerformed(ActionEvent e) {
       String clientName = clientNameMainScreen_textField.getText(); //setting the client name for instance variable
-      BankCard bankCard_obj;
 
       if(e.getSource() == addClientNameMainScreen_button) {
         if(clientName.isEmpty()) {
@@ -518,6 +534,7 @@ import java.util.ArrayList; //to use arrayList
           mainScreenWelcome_label.setText("Welcome " + clientName + ","); //Change client name of welcome screen
           welcomeUserAddDebit_label.setText("User: " + clientName); //Change client name of Debit Card Screen
           welcomeUserAddCredit_label.setText("User: " + clientName); //Change client name of Credit card screen
+          welcomeUserCheckBalance_label.setText("User: " + clientName); // change client name for check balance
           addClientNameMainScreen_button.setVisible(false);
           mainScreenInstruction_label.setVisible(false);
           clientNameMainScreen_textField.setVisible(false);
@@ -527,7 +544,7 @@ import java.util.ArrayList; //to use arrayList
       } else if(e.getSource()== changeClientNameMainScreen_button) {
         mainScreenWelcome_label.setText("Welcome User,");
         addClientNameMainScreen_button.setVisible(true);
-        mainScreenInstruction_label.setVisible(true);
+        mainScreenInstruction_label.setVisible(true); 
         clientNameMainScreen_textField.setVisible(true);
         changeClientNameMainScreen_button.setVisible(false);
         clientNameMainScreen_textField.setText("");
@@ -550,17 +567,46 @@ import java.util.ArrayList; //to use arrayList
         }
 
       } else if (e.getSource() == checkBalanceMainScreen_button) {
+        Boolean debitCardExists = false;
+
         if(clientName.isEmpty()) {
           JOptionPane.showMessageDialog(mainJFrame, "Client Name Cannot be Empty", "Alert", JOptionPane.ERROR_MESSAGE, sad_icon);
         } else {
-          checkBalance_frame.setVisible(true);
+          for(BankCard bankCard_obj : bankCard_ArrayList) {
+            if(bankCard_obj instanceof DebitCard) {
+              DebitCard debitCard_obj = (DebitCard) bankCard_obj;
+              currentBalanceCheckBalance_label.setText("Balance: Rs." + String.valueOf(debitCard_obj.get_balance()));
+              debitCardExists = true;
+            }
+          }
+          
+          if(!debitCardExists) {
+            JOptionPane.showMessageDialog(mainJFrame, "Debit Card does not exist", "Card not Fount", JOptionPane.ERROR_MESSAGE, sad_icon);
+          } else {
+            checkBalance_frame.setVisible(true);
+          }
         }
 
       } else if (e.getSource() == debitCardInfoMainScreen_button) {
+        Boolean debitCardExists = false;
+
         if(clientName.isEmpty()) {
           JOptionPane.showMessageDialog(mainJFrame, "Client Name Cannot be Empty", "Alert", JOptionPane.ERROR_MESSAGE, sad_icon);
         } else {
-          debitCardInfo_frame.setVisible(true);
+          //debitCardInfo_frame.setVisible(true);
+
+          for(BankCard bankcard_obj : bankCard_ArrayList) {
+            if(bankcard_obj instanceof DebitCard) {
+              DebitCard debitCard_obj = (DebitCard) bankcard_obj;
+              debitCard_obj.display();
+              debitCardExists = true;
+            }
+          }
+
+          if(!debitCardExists) {
+            JOptionPane.showMessageDialog(mainJFrame, "Debit Card not found", "No card found", JOptionPane.ERROR_MESSAGE, sad_icon);
+          }
+          
         }
 
       } else if (e.getSource() == creditCardInfoMainScreen_button) {
@@ -611,40 +657,47 @@ import java.util.ArrayList; //to use arrayList
         pinNumberWithdraw_textField.setText("");
 
       } else if(e.getSource() == addDebitCard_button) {
-        if(e.getSource() == addDebitCard_button) {
-          try {
-            // getting the required items from the gui
+        try {
+          // getting the required items from the gui
 
-            String issuerBank = issuerBankAddDebit_textField.getText();
-            String bankAccount = bankAccountAddDebit_textField.getText();
-            String dateDay = dateDayAddDebit_combo.getSelectedItem().toString();
-            String dateMonth = dateMonthAddDebit_combo.getSelectedItem().toString();
-            String dateYear = dateYearAddDebit_combo.getSelectedItem().toString();
-            String date = dateDay + "/" + dateMonth + "/" + dateYear; // Converting the date into a string
-            int cardId = Integer.parseInt(cardIdAddDebit_textField.getText());
-            int balanceAmount = Integer.parseInt(balanceAddDebit_textField.getText());
-            int pinNumber = Integer.parseInt(pinNumberAddDebit_textFiled.getText());
+          String issuerBank = issuerBankAddDebit_textField.getText();
+          String bankAccount = bankAccountAddDebit_textField.getText();
+          String dateDay = dateDayAddDebit_combo.getSelectedItem().toString();
+          String dateMonth = dateMonthAddDebit_combo.getSelectedItem().toString();
+          String dateYear = dateYearAddDebit_combo.getSelectedItem().toString();
+          String date = dateDay + "/" + dateMonth + "/" + dateYear; // Converting the date into a string
+          int cardId = Integer.parseInt(cardIdAddDebit_textField.getText());
+          int balanceAmount = Integer.parseInt(balanceAddDebit_textField.getText());
+          int pinNumber = Integer.parseInt(pinNumberAddDebit_textFiled.getText());
 
-            if(issuerBank.isEmpty() || clientName.isEmpty() || bankAccount.isEmpty()) {
-              JOptionPane.showMessageDialog(mainJFrame, "Empty Field Detected", "Error", JOptionPane.ERROR_MESSAGE, sad_icon);
+          Boolean debitExists = false; // to check if debit card already exits
 
-            } else {
-              // code to execute for add debit
-              // bankCard_obj = new BankCard(issuerBank, bankAccount, cardId, balanceAmount);
-              // DebitCard debitCard_obj = (DebitCard) bankCard_obj;
-              // debitCard_obj = new DebitCard(clientName, issuerBank, bankAccount, cardId, balanceAmount, pinNumber);
+          if(issuerBank.isEmpty() || clientName.isEmpty() || bankAccount.isEmpty()) {
+            JOptionPane.showMessageDialog(mainJFrame, "Empty Field Detected", "Error", JOptionPane.ERROR_MESSAGE, sad_icon);
 
-              bankCard_ArrayList.add(debitCard_obj);
+          } else {
+            // For Each loop to iterate through bankCard array list to check for instance of debit card
+            for(BankCard bankCard_obj : bankCard_ArrayList) {
+              if(bankCard_obj instanceof DebitCard && bankCard_obj.get_cardID() == cardId) {
+                JOptionPane.showMessageDialog(mainJFrame, "The card you are trying to add already exists", "Warning", JOptionPane.WARNING_MESSAGE, stopHand_icon);
+                debitExists = true;
+                break;
+              }
             }
+            
+            if(!debitExists) {
+              DebitCard debitCard_obj = new DebitCard(clientName, issuerBank, bankAccount, cardId, balanceAmount, pinNumber); // create a new debitcard object
+              bankCard_ArrayList.add(debitCard_obj); // add the object to bank card array list
+              JOptionPane.showMessageDialog(mainJFrame, "Debit card added successfully", "Success", JOptionPane.INFORMATION_MESSAGE, happy_icon); // show success message
+              addDebitCard_panel.setVisible(false);
+              mainScreen_panel.setVisible(true);
+            }
+          }  
 
-            } catch(NumberFormatException numFormat_ex) {
-              JOptionPane.showMessageDialog(mainJFrame, "Card ID, Balance Amount or Pin Number Invalid", "Error", JOptionPane.ERROR_MESSAGE, sad_icon);
-            } 
-          }
-
-      } else if(e.getSource() == addCreditCard_button) {
-        // code for add credit card
-      }
+        } catch(NumberFormatException numFormat_ex) {
+          JOptionPane.showMessageDialog(mainJFrame, "Card ID, Balance Amount or Pin Number Invalid", "Error", JOptionPane.ERROR_MESSAGE, sad_icon);
+        } 
+      } 
 
     }
 
