@@ -66,8 +66,10 @@ public class CreditCard extends BankCard {
             this.creditLimit = creditLimit;
             this.gracePeriod = gracePeriod;
             this.isGranted = true;
+            System.out.println("________________________________________________________________________________________");
             System.out.println("Credit Limit set to: Nrs." + this.creditLimit);
         } else {
+            System.out.println("________________________________________________________________________________________");
             System.out.print("Credit limit set too high, please try again");
         }
     }
@@ -80,6 +82,7 @@ public class CreditCard extends BankCard {
         creditLimit = 0;
         gracePeriod = 0;
         isGranted = false;
+        System.out.println("________________________________________________________________________________________");
         System.out.println("Credit Card cancelled");
     }
     
@@ -91,16 +94,20 @@ public class CreditCard extends BankCard {
         
         //checking if credit has been granted
         if(isGranted) { 
+            System.out.println("________________________________________________________________________________________");
             System.out.println("CVC Number: " + cvcNumber);
             System.out.println("Intrest Rate: " + interestRate + "%");
             System.out.println("Expiration Date: " + expirationDate);
             System.out.println("Credit Limit: Rs." + creditLimit);
             System.out.println("Grace Period: " + gracePeriod + " days");
+            System.out.println("________________________________________________________________________________________");
         //to display if credit has not been granted    
         } else { 
+            System.out.println("________________________________________________________________________________________");
             System.out.println("CVC Number: " + cvcNumber);
             System.out.println("Intrest Rate: " + interestRate + "%");
             System.out.println("Expiration Date: " + expirationDate);
+            System.out.println("________________________________________________________________________________________");
         }
     }
 }

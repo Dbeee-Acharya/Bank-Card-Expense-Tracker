@@ -59,6 +59,7 @@ public class BankCard {
     
     //display method to check if client name is empty and to print the required output
     public void display() {
+        System.out.println("________________________________________________________________________________________");
         
         //checking if the client name is empty
         if(clientName.equals("")) { 

@@ -1,5 +1,7 @@
-/*
- * The BankGUI class 
+/**
+ * The BankGUI class contains all the required GUI components along with event handling
+ * it calls the debitCard and CreditCard methods through object casting as required and 
+ * displays the required information
  */
 
 import javax.swing.*; //Importing the java swing components
@@ -13,7 +15,8 @@ import java.util.ArrayList; //to use arrayList
 
     //creating a new JFrame instance
     private JFrame mainJFrame,
-            checkBalance_frame; 
+            checkBalance_frame,
+            cancelCredit_frame; 
     
     /* Jpanels */
     private JPanel mainScreen_panel,
@@ -53,7 +56,10 @@ import java.util.ArrayList; //to use arrayList
             //Credit Limit buttons
             setCredit_button,
             clearSetCredit_button,
-            exitSetCredit_button;
+            exitSetCredit_button,
+            
+            // Cancel Credit Buttons
+            cancelCredit_button;
             
     /* JLabel used */
     private JLabel mainScreenWelcome_label,
@@ -97,7 +103,11 @@ import java.util.ArrayList; //to use arrayList
             welcomeUserSetCredit_label,
             cardIdSetCredit_label,
             creditLimitSetCredit_label,
-            gracePeriodSetCredit_label;
+            gracePeriodSetCredit_label,
+            
+            //Cancel Credit Labels
+            welcomeUserCancelCredit_label,
+            cardIdCancelCredit_label;
             
 
     /* TextFields used */
@@ -126,7 +136,10 @@ import java.util.ArrayList; //to use arrayList
             // set credit limit screen 
             cardIdSetCredit_textField,
             creditLimit_textField,
-            gracePeriod_textField;
+            gracePeriod_textField,
+            
+            // Cancel Credit text field
+            cardIdCancelCredit_textField;
 
     /* ComboBox used */
     private JComboBox<String> dateDayAddCredit_combo,
@@ -171,6 +184,7 @@ import java.util.ArrayList; //to use arrayList
 
       mainJFrame = new JFrame("Bank GUI"); //Creating the main JFrame 
       checkBalance_frame = new JFrame("Current Balance"); // Frame for displaying balance information
+      cancelCredit_frame = new JFrame("Cancel Credit Card"); // Frame for cancelling Credit card
 
       /* creating Jpanels*/
       mainScreen_panel = new JPanel();
@@ -222,6 +236,9 @@ import java.util.ArrayList; //to use arrayList
       creditLimitSetCredit_label = new JLabel("Credit Limit");
       gracePeriodSetCredit_label = new JLabel("Grace Period:");
 
+      welcomeUserCancelCredit_label = new JLabel("Welcome User");
+      cardIdCancelCredit_label = new JLabel("Card ID:");
+
       /* setting fonts for JLabel */
       mainScreenWelcome_label.setFont(headerFont);
       mainScreenInstruction_label.setFont(inputLabelFont);
@@ -255,6 +272,8 @@ import java.util.ArrayList; //to use arrayList
       cardIdSetCredit_label.setFont(inputLabelFont);
       creditLimitSetCredit_label.setFont(inputLabelFont);
       gracePeriodSetCredit_label.setFont(inputLabelFont);
+      welcomeUserCancelCredit_label.setFont(headerFont);
+      cardIdCancelCredit_label.setFont(inputLabelFont);
 
       /*JButton Components*/
       addClientNameMainScreen_button = new JButton("Add Client", addUser_icon);
@@ -285,6 +304,8 @@ import java.util.ArrayList; //to use arrayList
       clearSetCredit_button = new JButton("Clear", clear_icon);
       exitSetCredit_button = new JButton("Exit", exit_icon);
 
+      cancelCredit_button = new JButton("Cancel Credit", cancelCard_icon);
+
       /* Event Listener for Buttons */
       addClientNameMainScreen_button.addActionListener(this); 
       changeClientNameMainScreen_button.addActionListener(this);
@@ -314,6 +335,8 @@ import java.util.ArrayList; //to use arrayList
       clearSetCredit_button.addActionListener(this);
       exitSetCredit_button.addActionListener(this);
 
+      cancelCredit_button.addActionListener(this);
+
       /* JTextFeild Components */
       clientNameMainScreen_textField = new JTextField();
       
@@ -337,6 +360,8 @@ import java.util.ArrayList; //to use arrayList
       cardIdSetCredit_textField = new JTextField();
       creditLimit_textField = new JTextField();
       gracePeriod_textField = new JTextField();
+
+      cardIdCancelCredit_textField = new JTextField();
 
       /* JcomboBox components */
       dateDayAddCredit_combo = new JComboBox<String>(dateDay);
@@ -389,6 +414,9 @@ import java.util.ArrayList; //to use arrayList
       creditLimitSetCredit_label.setBounds(118, 255, 120, 25);
       gracePeriodSetCredit_label.setBounds(118, 335, 120, 25);
 
+      welcomeUserCancelCredit_label.setBounds(50, 25, 310, 35);
+      cardIdCancelCredit_label.setBounds(50, 80, 72, 25);
+
       // TextField
       clientNameMainScreen_textField.setBounds(250, 250, 242, 34);
 
@@ -413,6 +441,8 @@ import java.util.ArrayList; //to use arrayList
       creditLimit_textField.setBounds(118, 280, 242, 35);
       gracePeriod_textField.setBounds(118, 360, 242, 35);
       
+      cardIdCancelCredit_textField.setBounds(50, 105, 242, 35);
+
       // Button
       addClientNameMainScreen_button.setBounds(250, 300, 202, 40);
       changeClientNameMainScreen_button.setBounds(250, 300, 202, 40);
@@ -440,6 +470,8 @@ import java.util.ArrayList; //to use arrayList
       setCredit_button.setBounds(794, 255, 202, 40);
       clearSetCredit_button.setBounds(794, 316, 202, 40);
       exitSetCredit_button.setBounds(794, 377, 202, 40);
+
+      cancelCredit_button.setBounds(50, 155, 202, 40);
 
       // Combobox
       dateDayAddCredit_combo.setBounds(490, 280, 105, 34);
@@ -538,6 +570,11 @@ import java.util.ArrayList; //to use arrayList
       checkBalance_frame.add(welcomeUserCheckBalance_label);
       checkBalance_frame.add(currentBalanceCheckBalance_label);
 
+      cancelCredit_frame.add(welcomeUserCancelCredit_label);
+      cancelCredit_frame.add(cardIdCancelCredit_label);
+      cancelCredit_frame.add(cardIdCancelCredit_textField);
+      cancelCredit_frame.add(cancelCredit_button);
+
       /* set layout of jpanel */
       mainScreen_panel.setLayout(null);
       mainScreen_panel.setSize(1200, 672);
@@ -581,8 +618,15 @@ import java.util.ArrayList; //to use arrayList
 
       checkBalance_frame.setLayout(null); //removing the default layout 
       checkBalance_frame.setSize(390, 220); //setting the width and height of the JFrame
-      checkBalance_frame.setLocationRelativeTo(null); // to make sure the frame appears from the middle    
+      checkBalance_frame.setLocationRelativeTo(null); // to make sure the frame appears from the middle   
+      checkBalance_frame.setResizable(false);  
       checkBalance_frame.setVisible(false); //setting the visibility of mainFrame
+
+      cancelCredit_frame.setLayout(null);
+      cancelCredit_frame.setSize(400, 300);
+      cancelCredit_frame.setLocationRelativeTo(null);
+      cancelCredit_frame.setResizable(false);
+      cancelCredit_frame.setVisible(false);
     }
 
     @Override
@@ -601,6 +645,7 @@ import java.util.ArrayList; //to use arrayList
           welcomeUserAddCredit_label.setText("User: " + clientName); //Change client name of Credit card screen
           welcomeUserCheckBalance_label.setText("User: " + clientName); // change client name for check balance
           welcomeUserSetCredit_label.setText("User: " + clientName); // change client name for set credit limit
+          welcomeUserCancelCredit_label.setText("User: " + clientName); // change client name for cancel credit
           addClientNameMainScreen_button.setVisible(false);
           mainScreenInstruction_label.setVisible(false);
           clientNameMainScreen_textField.setVisible(false);
@@ -718,6 +763,8 @@ import java.util.ArrayList; //to use arrayList
         } else {
           for(BankCard bankCard_obj : bankCard_ArrayList) {
             if(bankCard_obj instanceof DebitCard) {
+              DebitCard debitCard_obj = (DebitCard) bankCard_obj;
+              balanceWithdraw_label.setText("Balance Rs." + String.valueOf(debitCard_obj.get_balance()));
               debitExists = true;
             }
           }
@@ -764,6 +811,12 @@ import java.util.ArrayList; //to use arrayList
         setCredit_panel.setVisible(false);
         mainScreen_panel.setVisible(true);
 
+      } else if(e.getSource() == clearSetCredit_button) {
+        cardIdSetCredit_textField.setText("");
+        creditLimit_textField.setText("");
+        gracePeriod_textField.setText("");
+        JOptionPane.showMessageDialog(mainJFrame, "All fields cleared", "cleared", JOptionPane.INFORMATION_MESSAGE, clear_icon); 
+      
         // go back to main screen from exit withdraw
       }else if(e.getSource() == exitWithdraw_button) {
         withdraw_panel.setVisible(false);
@@ -849,23 +902,13 @@ import java.util.ArrayList; //to use arrayList
           JOptionPane.showMessageDialog(mainJFrame, "Card ID, Withdrawal Amount or Pin Number Invalid", "Error", JOptionPane.ERROR_MESSAGE, sad_icon);
         }
 
-        
+        // to cancel credit card
       } else if(e.getSource() == cancelCreditMainScreen_button) {
-        Boolean cardCancelled = false;
-
-        for(BankCard bankCard_obj : bankCard_ArrayList) {
-          if(bankCard_obj instanceof CreditCard) {
-            bankCard_ArrayList.remove(bankCard_obj);
-            cardCancelled = true;
-          }
-        }
-
-        if(cardCancelled) {
-          JOptionPane.showMessageDialog(mainJFrame, "Credit card removed successfully", "Success", JOptionPane.INFORMATION_MESSAGE, happy_icon);
+        if(clientName.isEmpty()) {
+          JOptionPane.showMessageDialog(mainJFrame, "Client Name Cannot be Empty", "Alert", JOptionPane.ERROR_MESSAGE, sad_icon);
         } else {
-          JOptionPane.showMessageDialog(mainJFrame, "Credit Card not found", "Error", JOptionPane.ERROR_MESSAGE, sad_icon);
+          cancelCredit_frame.setVisible(true);
         }
-
         // add a new credit card
       }else if(e.getSource() == addCreditCard_button) {
         try {
@@ -918,16 +961,44 @@ import java.util.ArrayList; //to use arrayList
               CreditCard creditCard_obj = (CreditCard) bankCard_obj;
               creditCard_obj.setCreditLimit(creditLimit, gracePeriod);
               creditIsGranted = true;
+              break;
             }
           }
 
           if(!creditIsGranted) {
             JOptionPane.showMessageDialog(mainJFrame, "Please check you Card Id", "Card not found", JOptionPane.ERROR_MESSAGE, sad_icon);
+          } else {
+            JOptionPane.showMessageDialog(mainJFrame, "Credit limit set successfully", "Success", JOptionPane.INFORMATION_MESSAGE, happy_icon);
+            setCredit_panel.setVisible(false);
+            mainScreen_panel.setVisible(true);
           }
 
         } catch(NumberFormatException ex) {
           JOptionPane.showMessageDialog(mainJFrame, "Please check your values", "Invalid Input", JOptionPane.ERROR_MESSAGE, sad_icon);
         }
+
+      } else if(e.getSource() == cancelCredit_button) {
+        try {
+          int cardId = Integer.parseInt(cardIdCancelCredit_textField.getText());
+
+          CreditCard creditCard_obj = null;
+          for(BankCard bankCard_obj : bankCard_ArrayList) {
+            if(bankCard_obj instanceof CreditCard && bankCard_obj.get_cardID() == cardId) {
+              creditCard_obj = (CreditCard) bankCard_obj;
+            }
+          }
+
+          if(creditCard_obj != null) {
+            creditCard_obj.cancelCreditCard();
+            JOptionPane.showMessageDialog(mainJFrame, "Credit card Cancelled successfully", "Success", JOptionPane.INFORMATION_MESSAGE, happy_icon);
+            cancelCredit_frame.setVisible(false);
+          } else {
+            JOptionPane.showMessageDialog(mainJFrame, "Please check you Card Id", "Card not found", JOptionPane.ERROR_MESSAGE, sad_icon);
+          }
+        } catch(NumberFormatException ex) {
+          JOptionPane.showMessageDialog(mainJFrame, "Please check you Card Id", "Invalid Card ID", JOptionPane.ERROR_MESSAGE, sad_icon);
+        }
+
       }
 
     }
