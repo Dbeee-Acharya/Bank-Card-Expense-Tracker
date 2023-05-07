@@ -194,7 +194,7 @@ import java.util.ArrayList; //to use arrayList
       withdraw_panel = new JPanel();
 
       /* Initializing different fonts */
-      Font headerFont = new Font(Font.DIALOG, Font.PLAIN, 24);
+          Font headerFont = new Font(Font.DIALOG, Font.PLAIN, 24);
       Font inputLabelFont = new Font(Font.DIALOG, Font.PLAIN, 18);
 
       /* JLabel components */
@@ -629,11 +629,10 @@ import java.util.ArrayList; //to use arrayList
       cancelCredit_frame.setVisible(false);
     }
 
+    // Overriding the abstract method from action event listener class
     @Override
     public void actionPerformed(ActionEvent e) {
       String clientName = clientNameMainScreen_textField.getText(); //setting the client name for instance variable
-      Boolean debitExists = false;
-      Boolean creditExists = false;
 
       // TO add client name
       if(e.getSource() == addClientNameMainScreen_button) {
@@ -680,8 +679,10 @@ import java.util.ArrayList; //to use arrayList
           addCreditCard_panel.setVisible(true);
         }
 
-        // show the current balance
+        // go to set credit limit panel
       } else if(e.getSource() == setCreditMainScreen_button) {
+        Boolean creditExists = false;
+        
         if(clientName.isEmpty()) {
           JOptionPane.showMessageDialog(mainJFrame, "Client Name Cannot be Empty", "Alert", JOptionPane.ERROR_MESSAGE, sad_icon);
         } else {
@@ -701,6 +702,8 @@ import java.util.ArrayList; //to use arrayList
 
           // show current balance
       }else if (e.getSource() == checkBalanceMainScreen_button) {
+        Boolean debitExists = false;
+        
         if(clientName.isEmpty()) {
           JOptionPane.showMessageDialog(mainJFrame, "Client Name Cannot be Empty", "Alert", JOptionPane.ERROR_MESSAGE, sad_icon);
         } else {
@@ -721,7 +724,8 @@ import java.util.ArrayList; //to use arrayList
 
         // show debit card information
       } else if (e.getSource() == debitCardInfoMainScreen_button) {
-
+        Boolean debitExists = false;
+        
         if(clientName.isEmpty()) {
           JOptionPane.showMessageDialog(mainJFrame, "Client Name Cannot be Empty", "Alert", JOptionPane.ERROR_MESSAGE, sad_icon);
         } else {
@@ -740,13 +744,15 @@ import java.util.ArrayList; //to use arrayList
 
         // show credit card information
       } else if (e.getSource() == creditCardInfoMainScreen_button) {
+        Boolean creditExists = false;
+        
         if(clientName.isEmpty()) {
           JOptionPane.showMessageDialog(mainJFrame, "Client Name Cannot be Empty", "Alert", JOptionPane.ERROR_MESSAGE, sad_icon);
         } else {
           for(BankCard bankcard_obj : bankCard_ArrayList) {
             if(bankcard_obj instanceof CreditCard) {
-              CreditCard debitCard_obj = (CreditCard) bankcard_obj;
-              debitCard_obj.display();
+              CreditCard creditCard_obj = (CreditCard) bankcard_obj;
+              creditCard_obj.display();
               creditExists = true;
             }
           }
@@ -758,6 +764,8 @@ import java.util.ArrayList; //to use arrayList
 
         // go to withdraw screen
       } else if (e.getSource() == withdrawMainScreen_button) {
+        Boolean debitExists = false;
+          
         if(clientName.isEmpty()) {
           JOptionPane.showMessageDialog(mainJFrame, "Client Name Cannot be Empty", "Alert", JOptionPane.ERROR_MESSAGE, sad_icon);
         } else {
@@ -830,7 +838,7 @@ import java.util.ArrayList; //to use arrayList
         pinNumberWithdraw_textField.setText("");
 
         // add a new debit card object
-      } else if(e.getSource() == addDebitCard_button) {
+      } else if(e.getSource() ==    addDebitCard_button) {
         try {
           // getting the required items from the gui
 
@@ -839,6 +847,7 @@ import java.util.ArrayList; //to use arrayList
           int cardId = Integer.parseInt(cardIdAddDebit_textField.getText());
           int balanceAmount = Integer.parseInt(balanceAddDebit_textField.getText());
           int pinNumber = Integer.parseInt(pinNumberAddDebit_textFiled.getText());
+          Boolean debitExists = false;
 
           if(issuerBank.isEmpty() || clientName.isEmpty() || bankAccount.isEmpty()) {
             JOptionPane.showMessageDialog(mainJFrame, "Empty Field Detected", "Error", JOptionPane.ERROR_MESSAGE, sad_icon);
@@ -878,12 +887,12 @@ import java.util.ArrayList; //to use arrayList
           String dateMonth = dateMonthWithdraw_combo.getSelectedItem().toString();
           String dateYear = dateYearWithdraw_combo.getSelectedItem().toString();
           String date = dateDay + "/" + dateMonth + "/" + dateYear; // Converting the date into a string
+          
 
           DebitCard debitCard_obj = null;
           for(BankCard bankCard_obj : bankCard_ArrayList) {
             if(bankCard_obj instanceof DebitCard && debitCard_obj.get_cardID() == cardId) {
               debitCard_obj = (DebitCard) bankCard_obj;
-              debitExists = true;
             }
           }
 
@@ -909,6 +918,7 @@ import java.util.ArrayList; //to use arrayList
         } else {
           cancelCredit_frame.setVisible(true);
         }
+        
         // add a new credit card
       }else if(e.getSource() == addCreditCard_button) {
         try {
@@ -923,7 +933,8 @@ import java.util.ArrayList; //to use arrayList
           String dateMonth = dateMonthAddCredit_combo.getSelectedItem().toString();
           String dateYear = dateYearAddCredit_combo.getSelectedItem().toString();
           String date = dateDay + "/" + dateMonth + "/" + dateYear; // Converting the date into a string
-
+          Boolean creditExists = false;
+          
           if(issuerBank.isEmpty() || bankAccount.isEmpty()) {
             JOptionPane.showMessageDialog(mainJFrame, "Please check Issuer Bank or Bank Account", "Invalid Input", JOptionPane.ERROR_MESSAGE, sad_icon);
           } else {
@@ -961,7 +972,6 @@ import java.util.ArrayList; //to use arrayList
               CreditCard creditCard_obj = (CreditCard) bankCard_obj;
               creditCard_obj.setCreditLimit(creditLimit, gracePeriod);
               creditIsGranted = true;
-              break;
             }
           }
 
@@ -985,6 +995,7 @@ import java.util.ArrayList; //to use arrayList
           for(BankCard bankCard_obj : bankCard_ArrayList) {
             if(bankCard_obj instanceof CreditCard && bankCard_obj.get_cardID() == cardId) {
               creditCard_obj = (CreditCard) bankCard_obj;
+              break;
             }
           }
 
